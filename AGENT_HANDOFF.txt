@@ -148,6 +148,11 @@ tested. Library versions, licences and dataset terms mentioned in it were
 not checked online. Verify them before relying on them.
 
 
+Real websites: the current code works only for the local practice page.
+Plan and safety rules are in guide section 25. Use approved practice sites
+and fake accounts only; the suggested public sites have not been checked.
+
+
 PART 6: KEEPING NOTES
 ---------------------
 After each piece of work, update PROGRESS.txt (done, test results, AI use).

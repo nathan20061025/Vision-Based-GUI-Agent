@@ -29,6 +29,7 @@ CONTENTS
 22. Viva questions
 23. Decisions to confirm
 24. Optional stretch goal: voice commands
+25. Testing on real websites
 
 
 1. THE PROJECT IN SIMPLE WORDS
@@ -620,5 +621,44 @@ Tests:
   [ ] Wrong recognition can be edited
   [ ] Nothing runs without clicking Start
   [ ] Works offline
+
+25. TESTING ON REAL WEBSITES
+----------------------------
+NOW: not ready. The current code knows only the local practice page (its
+address, element names and window title are written in the code).
+
+When it can try a new page:
+  Now       Playwright uses names written in the code: not ready.
+  M5        OCR + simple matching: may handle simple pages with clear
+            text. OCR tools often use pretrained ML, but using one is not
+            training your own model.
+  M6-M8     Your three models. The GOAL is to handle more varied pages.
+            You must test whether they do.
+It will not automatically work on every website. The planner may support
+only some tasks, and new designs, pop-ups and slow pages can cause
+failures.
+
+Stages:
+  1. Local practice page (now)
+  2. More local practice sites (M3)
+  3. Public sites made for automation practice (after M5)
+  4. Final tests: local/saved pages and benchmark tasks (main results);
+     approved public practice sites only as extra evidence
+
+Sites to consider (NOT checked yet):
+  https://the-internet.herokuapp.com/login
+  https://www.saucedemo.com
+First check they are available, read their rules on automated use, use
+only the test logins they publish, confirm with the supervisor and check
+the ethics approval.
+
+Safety: practice sites and fake accounts only. No banking, email, social
+media, university accounts or real shopping/payment pages. Never use real
+passwords or personal details. Keep stop controls on and watch every run.
+Close private windows before full-screen capture.
+
+Research: live sites change or go offline, so results are hard to repeat.
+Check a site's rules before saving its pages. A site used to test unseen
+designs must not be used for training or tuning.
 
 END OF GUIDE

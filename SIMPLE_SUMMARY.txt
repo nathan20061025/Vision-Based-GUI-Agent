@@ -138,4 +138,11 @@ worked. This needs proper testing before I draw conclusions.
 Next: finish open checks, then more practice sites and tasks.
 See PROGRESS.txt.
 
+CAN IT WORK ON REAL WEBSITES?
+Not yet. It only knows my practice page. A basic version (text reading and
+simple rules) may later handle simple new pages. My ML models aim to
+handle more varied pages, but I must test that. It will not work on every
+website. I will use only approved practice sites with fake accounts, never
+real passwords. See guide section 25.
+
 More detail is in PROJECT_GUIDE.txt.

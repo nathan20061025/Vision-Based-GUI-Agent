@@ -141,6 +141,7 @@ been approved and what it covers.)
 [ ] Which vision-language model, on what hardware
 [ ] Full screen or page area for the verifier
 [ ] Voice commands
+[ ] Which public practice websites may be used (guide section 25)
 [ ] Deadlines and marking scheme
 
 
@@ -158,6 +159,7 @@ All on 2026-11-25, Claude Code (AI):
   installed pynput, PyAutoGUI and mss; helped find the Caps Lock cause and
   added the fix; checked my run logs.
 - Tidied all the notes.
+- Explained testing on real websites and added it to the notes.
 
 
 WEEKLY NOTES (write these yourself)
