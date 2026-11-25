@@ -1,0 +1,141 @@
+MY PROJECT IN SIMPLE ENGLISH
+============================
+
+WHAT IS IT?
+A program that uses a computer like a person does.
+You give it a task, for example "Log in to this website".
+It looks at the screen, uses the mouse and keyboard, and checks its work.
+
+
+HOW DOES IT WORK?
+1. You type a task.
+2. The program breaks it into small steps.
+3. It takes a picture of the screen (the BEFORE picture).
+4. It finds the buttons, text boxes and links.
+5. It picks the right one.
+6. It clicks, types, scrolls or presses a key.
+7. It waits, then takes another picture (the AFTER picture).
+8. It checks: did the step work?
+     YES -> go to the next step.
+     NO  -> wait and check again, retry, try something else, or stop.
+9. It finishes when the task is done. It also stops if it reaches the
+   step limit or you press the stop key.
+
+
+EXAMPLE
+Task: log in to a practice website with a fake account.
+  - Click the username box.
+  - Type the username.
+  - Click the password box.
+  - Type the password.
+  - Click the Login button.
+  - Check that the logged-in page appears.
+The program checks after every step.
+
+
+THE THREE ML MODELS
+1. Screen parser:   "What is on the screen?"
+                    It finds buttons, boxes and links.
+                    (A text-reading tool, called OCR, reads the words.)
+
+2. Grounding model: "Which one do I need?"
+                    It matches "login button" to the right button.
+
+3. Verifier:        "Did it work?"
+                    It compares the before and after pictures, using
+                    information about what the program tried to do.
+
+The part that breaks the task into steps is called the planner.
+It is not one of the three models. At first it can use simple rules.
+
+
+THE MOST IMPORTANT PART: THE VERIFIER
+Many agents can click the wrong place and carry on without noticing.
+The verifier tries to catch that.
+
+My main question:
+Can a small checker running on a normal laptop make the agent more
+reliable, and what does it cost in time and memory?
+
+I will compare four versions:
+  A. No checking
+  B. A simple rule: did enough of the picture change?
+  C. My trained verifier
+  D. A larger AI model that understands pictures and text
+
+I do not know which is best until I test them.
+
+
+HOW DO THE MODELS LEARN?
+1. Make practice websites.
+2. Collect screen pictures.
+3. Label them (what is on the screen, which item is correct, and whether
+   an action worked). Many labels can be made automatically, but I must
+   check some by hand.
+4. Train the models.
+5. Test them on websites they did not see during training.
+
+RULE: while working, the agent only looks at screen pictures. It does not
+read the website's code. The code is used only to make labels and to check
+the results.
+
+
+HOW DO I KNOW IF IT IS GOOD?
+  - How many tasks does it finish?
+  - How often does it say "it worked" when it did not?
+  - Can it recover from mistakes?
+  - How long does each step take?
+  - How much memory does it use?
+
+
+PRIVACY AND SAFETY
+  - It is designed to run on my laptop, so screen pictures stay there.
+  - Test only on practice websites with fake accounts.
+  - It has a step limit and a stop key.
+
+
+VOICE COMMANDS (OPTIONAL EXTRA)
+Speak -> words appear -> check and fix them -> click Start.
+Add this only after the main system works, and ask my supervisor first.
+
+
+BUILD ORDER
+1. Check the rules and scope with my supervisor, and sort out ethics.
+2. Make one practice page and take before and after pictures of a click.
+3. Make the mouse, keyboard and stop key work.
+4. Make more practice websites and tasks.
+5. Add the simple picture-change rule.
+6. Build a basic full agent without my trained models.
+7. Train the three models, giving most time to the verifier.
+8. Add the larger AI model for comparison.
+9. Make the app screen.
+10. Run the final tests.
+11. Do the user test (only with ethics approval).
+12. Finish the reports and practise for the viva.
+Write notes and report drafts all the way through.
+
+Voice, if approved, is started only after step 8, if there is enough time.
+
+
+ONE-LINE SUMMARY
+LOOK -> FIND -> CHOOSE -> ACT -> CHECK -> FIX OR CONTINUE
+
+WHERE AM I NOW?
+(Updated 2026-11-25)
+Working so far, on one practice page:
+  - the before/after check for one click (page pictures)
+  - real mouse and keyboard: click, type, press keys, scroll
+  - stop with Esc or a screen corner, and an action limit
+  - optional full-screen pictures, deleted after the run unless kept
+  - a text log that does not save typed text
+A tool called Playwright still finds the buttons and checks the results.
+No ML models are built yet.
+
+One early finding: on full-screen pictures, every change in the demo was
+smaller than the simple rule's temporary 1% limit, even though the demo
+worked. This needs proper testing before I draw conclusions.
+
+Next: finish open checks, then more practice sites and tasks.
+See PROGRESS.txt.
+
+More detail is in PROJECT_GUIDE.txt.

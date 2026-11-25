@@ -1,0 +1,624 @@
+VISION-BASED GUI AGENT - FULL PROJECT GUIDE (START TO END)
+==========================================================
+Based on the project proposal. Numbers marked "suggested" are starting
+points, not requirements or results. Check library versions, licences and
+dataset terms yourself before relying on them.
+
+CONTENTS
+ 1. The project in simple words
+ 2. Words you must know
+ 3. How the whole system works
+ 4. One full example
+ 5. What you need to learn
+ 6. Setup
+ 7. Folder structure
+ 8. Part A: Practice websites
+ 9. Part B: Screen capture and actions
+10. Part C: Planner
+11. Part D: Screen parser (ML model 1)
+12. Part E: Grounding (ML model 2)
+13. Part F: Verifier (ML model 3, main contribution)
+14. Part G: Agent loop, retry and safety
+15. Part H: User interface
+16. Evaluation and experiments
+17. Testing the software
+18. User test and ethics
+19. Documents
+20. Build order and milestones
+21. Problems you will probably meet
+22. Viva questions
+23. Decisions to confirm
+24. Optional stretch goal: voice commands
+
+
+1. THE PROJECT IN SIMPLE WORDS
+------------------------------
+The user types a task. The program looks at the screen, decides where to
+click or what to type, does it, then checks whether it worked.
+
+Research question (suggested wording):
+"How much does a lightweight local verifier improve the task success of a
+small GUI agent, and what does it cost in time and memory, compared with a
+pixel-difference rule and a larger vision-language model?"
+
+
+2. WORDS YOU MUST KNOW
+----------------------
+GUI             Graphical user interface: buttons, boxes, menus.
+Agent           A program that observes, decides and acts in a loop.
+Screen parser   Finds elements in a screenshot.
+Bounding box    Rectangle around an element (x1, y1, x2, y2).
+OCR             Reads text from an image.
+Grounding       Matching words ("the login button") to a place on screen.
+Verifier        Decides whether the last action worked.
+Baseline        A simple method you compare your method against.
+Ablation study  Remove or swap one part and measure what changes.
+Fine-tuning     Training an already pretrained model on your own data.
+Train/val/test  Data to learn from / to tune with / for final scoring.
+Data leakage    Test information getting into training. Makes results invalid.
+Ground truth    The correct answer.
+
+
+3. HOW THE WHOLE SYSTEM WORKS
+-----------------------------
+ User instruction
+        |
+    [Planner]  -> list of steps
+        |
+        v
+ +--> [Capture BEFORE screenshot]
+ |          |
+ |    [Parser + OCR]  -> list of elements (type, box, text)
+ |          |
+ |    [Grounding]     -> the chosen element
+ |          |
+ |    [Executor]      -> click / type / scroll / key
+ |          |
+ |    [Wait until the screen stops changing, with a time limit]
+ |          |
+ |    [Capture AFTER screenshot]
+ |          |
+ |    [Verifier]      -> success or failure, with a confidence score
+ |      |         |
+ |   success    failure -> retry / choose next candidate / replan / stop
+ |      |         |
+ +------+---------+   until task done, step limit, or stop key
+
+IMPORTANT RULE: while running, the agent sees only pixels (screenshots).
+It must not read the page's HTML (DOM). You MAY use the DOM to create
+training labels and to score results, because that is the examiner's
+answer sheet, not the agent's eyes. State this clearly in the report.
+
+
+4. ONE FULL EXAMPLE
+-------------------
+Instruction: Log in with username "testuser" and password "test123"
+
+Planner output:
+  1. click  target="username field"
+  2. type   text="testuser"
+  3. click  target="password field"
+  4. type   text="test123"
+  5. click  target="login button"
+  6. expect "the logged-in page appears"
+
+Step 5:
+  - Capture the before screenshot.
+  - Parser returns, for example:
+      id 1  textbox  [400,300,800,340]  "Username"
+      id 2  textbox  [400,360,800,400]  "Password"
+      id 3  button   [400,430,520,470]  "Login"
+  - Grounding scores each element against "login button" and picks id 3.
+  - Executor clicks the centre of the box: (460, 450).
+  - Wait, then capture the after screenshot.
+  - Verifier gets before, after, action type and click position.
+  - It returns, for example, success with 0.94.
+  - If failure: follow the retry rules in section 14.
+
+
+5. WHAT YOU NEED TO LEARN (in this order)
+-----------------------------------------
+1. Python: functions, classes, files, JSON, exceptions, packages.
+2. Git: add, commit, push, branches, .gitignore.
+3. Basic HTML, CSS and JavaScript (for practice pages).
+4. Images: pixels, resizing, cropping, coordinates.
+5. Playwright and PyAutoGUI basics.
+6. ML basics: loss, training, overfitting, train/val/test split.
+7. Metrics: accuracy, precision, recall, F1, confusion matrix, IoU, mAP.
+8. PyTorch: tensors, Dataset, DataLoader, training loop.
+9. CNNs and transfer learning.
+10. Object detection with YOLO.
+11. Text similarity and image-text models.
+12. Experiment design and basic statistics.
+
+
+6. SETUP
+--------
+CURRENT SETUP: this laptop uses Python 3.13 with a .venv folder (Anaconda
+was not found). See README.md for the commands and PROGRESS.txt for status.
+Later ML packages must be checked for Python 3.13 support. The proposal
+lists Anaconda, which is an alternative setup shown below.
+
+Install: Anaconda, VS Code, Git.
+
+  conda create -n guiagent python=3.11
+  conda activate guiagent
+  pip install playwright pyautogui mss pillow numpy opencv-python
+  pip install pandas matplotlib scikit-learn pytest pynput
+  playwright install chromium
+
+Later: torch, torchvision, ultralytics, transformers,
+sentence-transformers, and one OCR tool (PaddleOCR or Tesseract).
+Tesseract also needs its own Windows program installed.
+Use the official PyTorch install selector for your hardware.
+Save exact versions: pip freeze > requirements.txt
+
+Write down your laptop's CPU, RAM, GPU and Windows version. Your
+"runs on a regular laptop" claim depends on them.
+
+
+7. FOLDER STRUCTURE (suggested)
+-------------------------------
+This is the planned final layout. Only part of it exists now. The pixel rule
+is currently agent/pixel_rule.py; move it into agent/verifier/ when you add
+the other verifiers. Also built, but not listed below: agent/coordinates.py.
+agent/capture.py, executor.py, safety.py and logger.py exist too. See
+PROGRESS.txt for what is built and tested. As built: capture.py saves
+before/after pictures and deletes them after a run unless --keep is used,
+and logger.py logs actions without typed text (section 14 suggests saving
+more for error analysis: turn picture keeping on only when needed).
+
+  agent/
+    capture.py        screenshots
+    parser.py         element detection + OCR
+    grounding.py      choose the element
+    executor.py       mouse and keyboard
+    verifier/         pixel_rule.py, cnn.py, vlm.py (same interface)
+    planner.py        instruction -> steps
+    loop.py           main loop, retries, limits
+    safety.py         stop key, allowed sites
+    logger.py         saves every step
+  ui/app.py
+  practice_sites/     your local test websites
+  tasks/              task definitions (JSON)
+  data_tools/         collect, label, split data
+  training/           train_parser.py, train_grounding.py, train_verifier.py
+  evaluation/         run_experiments.py, metrics.py, charts.py
+  tests/
+  configs/            settings for each experiment
+  data/               NOT in Git
+  models/             NOT in Git
+  runs/               NOT in Git (logs and screenshots)
+  README.md, requirements.txt, .gitignore
+
+.gitignore should contain: data/  models/  runs/  __pycache__/  .env
+.claude/  *.pdf
+Your repo is PUBLIC. Never commit the proposal, real passwords, personal
+screenshots or participant data. Decide whether this guide should be public.
+
+
+8. PART A: PRACTICE WEBSITES
+----------------------------
+Make small local sites so tests are safe and repeatable.
+Suggested: login, sign-up form, search and results, to-do list, settings
+page with checkboxes and dropdowns, simple shop cart, multi-page form.
+
+Vary: colours, fonts, button positions, labels ("Login" / "Sign in"),
+page size, light and dark themes.
+
+Build in failures you can switch on:
+  - button does nothing
+  - slow loading
+  - popup covering the target
+  - validation error
+  - page layout shifts before the click
+  - an unrelated thing changes (clock, advert, animation) while the
+    action fails
+The last one matters: a pixel rule is likely to be fooled by it.
+
+Split the sites NOW: training sites, validation sites, test sites.
+Never train on test sites.
+
+
+9. PART B: SCREEN CAPTURE AND ACTIONS
+-------------------------------------
+Capture: mss for the screen. Save PNG files.
+Actions: click, type, press key, scroll.
+
+Which tool does what:
+  PyAutoGUI  = the agent's mouse and keyboard.
+  Playwright = open and reset test pages, make labels, check final result.
+
+Coordinate problems to solve early:
+  - Windows display scaling (125%, 150%) can shift clicks. Make the program
+    DPI-aware or fix scaling at 100%, then test it.
+  - Playwright positions are relative to the page, not the whole screen.
+    You must add the browser window's offset and account for scaling.
+  - Start with one monitor and a fixed browser size.
+  - Playwright page screenshots show the page only; mss shows the screen.
+    Use the same capture type for training and running.
+
+Test: draw a dot on the screenshot where you plan to click and compare it
+with where the click really lands.
+
+
+10. PART C: PLANNER
+-------------------
+Your proposal says "change the plan", so something must make plans.
+It is not one of your three models.
+
+Suggested for version 1: rule-based. Support a limited set of phrasings
+and task types (log in, fill form, search, tick, select). Output steps as:
+  {"action": "click", "target": "login button", "text": null,
+   "expect": "next page appears"}
+
+State this limit openly. A language-model planner is a possible extension,
+but it adds another variable to your experiments.
+
+
+11. PART D: SCREEN PARSER (ML MODEL 1)
+--------------------------------------
+Input:  screenshot.
+Output: list of {class, box, confidence, text}.
+
+Classes (suggested, keep few): button, textbox, link, checkbox, radio,
+dropdown, icon.
+
+Data:
+  - Best source: your own pages. Playwright can give element boxes from the
+    DOM, so labels are created automatically. Check samples by eye and
+    remove hidden or covered elements.
+  - Add hand-labelled screens (Label Studio) from other layouts.
+  - Rico is mainly mobile. If you use it, test whether it actually helps.
+  - Suggested start: a few thousand auto-labelled screenshots with real
+    variety. Many near-identical copies add little.
+
+Model: a small pretrained YOLO. Ultralytics uses the AGPL-3.0 licence
+(or a paid one): check what that means for your public repo.
+
+Training: fine-tune, use validation data to stop and tune, try image size
+carefully because small icons disappear when shrunk. Do not use left-right
+flipping, since it mirrors text and layouts.
+
+OCR: run it on the screenshot, then attach text to boxes by overlap and
+nearness (a textbox label is often above or left of the box).
+
+Metrics: precision, recall, mAP@0.5, mAP@0.5:0.95, results per class,
+time per image.
+
+
+12. PART E: GROUNDING (ML MODEL 2)
+----------------------------------
+Input:  target phrase + element list.
+Output: ranked list of elements with scores.
+
+Step 1, baseline (no training): fuzzy text match between the phrase and
+the OCR text, plus element type.
+
+Step 2, trained model: for each candidate combine
+  - text similarity (small sentence-embedding model)
+  - element type
+  - position and size
+  - optionally an image crop (for icons with no text)
+and train a small ranking classifier: correct element = 1, others = 0.
+
+Data: (phrase, screenshot, correct element) examples from your pages.
+Write many phrasings: "login button", "sign in", "press log in".
+Keep some phrasings for testing only. Check Mind2Web's format and licence
+before planning to use it. Keep ScreenSpot for testing only.
+
+Metrics: top-1 accuracy, top-3 accuracy, click-inside-correct-box rate.
+Test it twice: with ground-truth boxes (grounding alone) and with parser
+boxes (real pipeline). This shows which part causes the errors.
+
+
+13. PART F: VERIFIER (ML MODEL 3, MAIN CONTRIBUTION)
+----------------------------------------------------
+Input:  before image, after image, action type, click position, and maybe
+        the typed text or expected result.
+Output: success probability.
+
+Define "success" precisely before collecting data. Suggested: "the
+intended effect of this single step happened". Write a rule for each
+action type. Examples:
+  click login with valid details -> logged-in page shown
+  type "testuser"                -> that field now contains it
+  click checkbox                 -> that checkbox changed state
+  scroll down                    -> content moved down
+
+Note: the model can only judge intent if it is told the intent. Action
+type and position alone may not be enough. Test adding the expected result.
+
+The three verifiers to compare (plus no verifier):
+ 1. Pixel rule: difference between before and after. If the changed share
+    is above a threshold, say success. Choose the threshold on VALIDATION
+    data only.
+ 2. Your model.
+ 3. A small open vision-language model run locally, asked the same
+    question with a fixed prompt. Check it fits your laptop. If you run it
+    elsewhere, report that hardware, and do not compare speeds as if equal.
+
+Suggested model design:
+  - Same pretrained small CNN (e.g. MobileNetV3 or ResNet18) applied to
+    before and after (shared weights).
+  - Combine: before features, after features, their difference.
+  - Add: action type embedding, click position, expected-result embedding.
+  - Add: a crop around the click from both images, because small changes
+    vanish in a resized full screen.
+  - Final small layers -> one number -> sigmoid.
+  - Loss: binary cross-entropy, with class weights if unbalanced.
+  - First train only the new layers, then unfreeze some CNN layers.
+
+Data collection (automatic):
+  1. Reset the page.
+  2. Capture before.
+  3. Do a correct or deliberately wrong action (miss the button, click a
+     neighbour, type in the wrong field, press when disabled).
+  4. Wait. Capture after.
+  5. Let the DOM check set the label.
+  6. Save images and a JSON record: site, action, position, expected,
+     label, failure type.
+Suggested start: 1,000 examples to test the pipeline, then grow to several
+thousand with balanced success/failure. Manually check a random sample.
+
+Split by SITE or template, not by random row. Random splitting puts nearly
+identical screens in train and test and inflates the score.
+
+Metrics: precision, recall, F1, confusion matrix, accuracy per failure
+type, inference time, memory, model size.
+The most dangerous error is saying success when the action failed. Report
+that rate separately.
+
+Ablations on your model: without difference features; without click crop;
+without action information.
+
+
+14. PART G: AGENT LOOP, RETRY AND SAFETY
+----------------------------------------
+Pseudo-code:
+  steps = planner.make(instruction)
+  for step in steps:
+      attempts = 0
+      while True:
+          check stop key and limits
+          before = capture()
+          elements = parser(before)
+          target = grounding(step, elements, excluding=failed_targets)
+          executor.run(step, target)
+          wait_until_stable(timeout)
+          after = capture()
+          if verifier(before, after, step) is success: break
+          attempts += 1
+          choose recovery, or stop and report failure
+
+Recovery order (suggested):
+  1. Wait longer and check again (the page may be slow). Do not repeat the
+     action yet.
+  2. Retry the same target once.
+  3. Try the next-best candidate.
+  4. Scroll to look for the target.
+  5. Replan, or stop and tell the user.
+Careful: repeating an action can toggle a checkbox back or submit twice.
+Check the current screen before every retry.
+
+"Task done" must be defined. The agent decides using the screen; your
+evaluation script separately checks the truth through the DOM. Count the
+cases where the agent claims success but is wrong.
+
+Safety:
+  - Maximum steps, maximum retries, time limit.
+  - Global stop key (pynput).
+  - Keep PyAutoGUI FAILSAFE on (mouse to a screen corner stops it).
+  - Allow only your practice sites. Stop if another window takes focus.
+  - Fake accounts only.
+
+Logging: for every step save screenshots, elements, chosen target, scores,
+action, verifier result, time taken. You will need this for error analysis.
+
+
+15. PART H: USER INTERFACE
+--------------------------
+Simple desktop app (Tkinter is built in; PySide6 looks better).
+Needs: instruction box, Start, Stop, current step, log, last screenshot,
+verifier result, final success or failure message.
+Run the agent in a separate thread so the window does not freeze.
+Make sure the app window does not cover the browser or appear in the
+agent's screenshots.
+For privacy: after downloading models, disconnect the internet and show it
+still works on local pages. Check libraries for telemetry settings.
+
+
+16. EVALUATION AND EXPERIMENTS
+------------------------------
+Task list: suggested 30 to 50 tasks, easy / medium / hard, on unseen test
+sites, plus a chosen set of MiniWoB++ tasks. MiniWoB++ has its own
+environment, so check early how your screen-based agent will connect.
+
+Each task file: id, instruction, start page, success check, step limit.
+
+Conditions:
+  A. No verifier
+  B. Pixel rule
+  C. Your verifier
+  D. Larger vision-language model
+
+Keep everything else the same. Decide the retry rules before testing.
+With no verifier there are no retries, so B, C and D measure verification
+PLUS recovery. Say that clearly.
+
+Repeat each task several times (suggested 3 to 5). Identical repeats of a
+deterministic run add no evidence, so vary start conditions or injected
+failures, and use the same ones for every condition.
+
+Measure: task success rate, steps per task, retries, recovery rate, false
+success rate, time per step, verifier time, RAM and GPU memory.
+
+Statistics: report counts and confidence intervals. Because conditions use
+the same tasks, use a paired comparison such as McNemar's test on one
+result per task, or bootstrap over tasks. Ask your supervisor.
+
+Error analysis: label every failed task by cause: planner, parser, OCR,
+grounding, execution, timing, verifier, recovery.
+
+Do not tune anything after looking at test results.
+
+
+17. TESTING THE SOFTWARE
+------------------------
+Unit tests: coordinate conversion, planner, pixel rule, retry logic,
+limits. Integration tests: one full step on a practice page. System tests:
+whole tasks. Test the stop key. Keep a table: test id, input, expected,
+actual, pass/fail. Check every functional and non-functional requirement.
+
+
+18. USER TEST AND ETHICS
+------------------------
+Do not start until your ethics approval covers it.
+Suggested 5 to 10 people. Information sheet and consent form. Give each
+the same few tasks. Measure completion, time and problems. You can use the
+System Usability Scale (SUS). Store results anonymously.
+
+
+19. DOCUMENTS
+-------------
+Deliverables: proposal, ethics form, contextual report, thesis report,
+user manual, system design document.
+Follow your university's template and marking scheme first.
+
+Usual thesis outline: introduction; literature review and research gap;
+requirements; methodology; design; implementation; testing; results;
+discussion and limitations; ethics; conclusion and future work.
+
+Diagrams: architecture, use case, sequence, activity, class.
+
+Keep a weekly log from today: what you did, decisions, reasons, results,
+and how AI was used. Follow the AI declaration rules.
+Read every paper yourself before citing it, and confirm each reference
+exists with correct details.
+
+
+20. BUILD ORDER AND MILESTONES
+------------------------------
+M0  Confirm rules and scope. Reading list. Ethics.
+M1  Setup + one practice page + before/after capture around one click.
+M2  Executor with correct coordinates + stop key + logging.
+M3  Several practice sites + task files + automatic success checks.
+M4  Pixel-difference verifier.
+M5  Basic full agent: planner + OCR + text-match grounding.
+M6  Parser data and training.
+M7  Grounding model.
+M8  Verifier data and training.        <- spend the most time here
+M9  Vision-language model verifier.    (check it runs much earlier)
+M10 User interface.
+M11 Final experiments. Freeze code and models first.
+M12 User test.
+M13 Reports, manual, demo video, viva practice.
+
+Write the reports as you go. Add real dates once you know your deadlines.
+
+If time runs short, cut in this order: extra interface features, extra
+element classes, extra sites, trained grounding extras. Protect the
+verifier and a fair evaluation. Agree any change to the promised three
+models with your supervisor.
+
+
+21. PROBLEMS YOU WILL PROBABLY MEET
+-----------------------------------
+Clicks land wrong       -> display scaling or window offset.
+Screenshot too early    -> wait for stability, with a timeout.
+Screen never stable     -> animations; ignore tiny changes, use timeout.
+Parser misses small items -> larger input size or tiling.
+OCR errors              -> upscale crops; allow fuzzy matching.
+Verifier scores ~100%   -> suspect leakage or an easy shortcut.
+Good on val, bad on test -> overfitting to your page styles; add variety.
+Out of memory           -> smaller batch and images; use Colab/Kaggle.
+Colab disconnects       -> save checkpoints often.
+
+
+22. VIVA QUESTIONS TO PRACTISE
+------------------------------
+- What is new in your project compared with existing work?
+- Why these models? What did you train yourself?
+- How did you create and split the data?
+- How do you know there is no leakage?
+- Why is a pixel rule not enough?
+- What does your verifier get wrong?
+- Does the agent ever read the HTML?
+- What do your results NOT show?
+- How did you use AI tools?
+
+
+23. DECISIONS TO CONFIRM WITH YOUR SUPERVISOR
+---------------------------------------------
+[ ] Adding voice commands (section 24), which is not in the approved proposal
+[ ] AI-use rules, in writing, and how to declare it
+[ ] "Web-Based Application" (title) or desktop application
+[ ] "Team" wording in the abstract
+[ ] Is fine-tuning enough for the three models
+[ ] Is a rule-based planner acceptable
+[ ] Which larger vision-language model, and on what hardware
+[ ] Deadlines and marking scheme
+
+
+24. OPTIONAL STRETCH GOAL: VOICE COMMANDS
+-----------------------------------------
+STATUS: optional. Not in the approved proposal. Ask your supervisor first.
+Start only after the main agent, verifier and experiment pipeline work
+(after M9). Leave enough time for the final experiments (M11). The core
+project must be complete without it.
+
+How it fits (only the input changes):
+  Speak -> speech-to-text -> check/edit the text -> Start -> planner
+  -> same agent
+The parser, grounding model and verifier do not change.
+
+Tools (check versions and licences):
+  Speech-to-text: a pretrained local model, such as faster-whisper
+                  (small model) or Vosk
+  Recording:      sounddevice
+
+Suggested files:
+  agent/voice/recorder.py       record from the microphone
+  agent/voice/transcriber.py    audio -> text
+  ui/app.py                     microphone button
+
+Interface:
+  - Press the microphone button to start, press again to stop.
+  - Set a maximum recording length.
+  - Put the recognised text in the instruction box so it can be edited.
+  - Never run it automatically. The user must click Start.
+  - Show clear messages: no microphone, nothing heard, recognition failed.
+  - Typing must always work.
+  - Keep the keyboard stop key. Do not rely on voice to stop the agent.
+
+Risks:
+  - Accents and noise cause errors, especially in usernames, passwords,
+    email addresses and web addresses. Let users type or correct them.
+  - Do not speak real passwords. Use fake accounts only.
+  - Extra memory and processing load. Measure it, and consider whether the
+    speech model should be unloaded before the agent runs.
+
+Privacy:
+  - Process audio on the laptop.
+  - Do not save recordings by default; delete temporary audio files.
+  - After downloading the model, check that it works offline.
+
+Research:
+  - A pretrained speech model adds an ML feature, but it is not your own
+    training work or main contribution. The verifier stays the focus.
+  - Run all main experiments with TYPED instructions.
+  - If you evaluate voice, do it separately: word error rate, share of
+    commands recognised correctly, and processing time.
+  - Check that your ethics approval covers recording participants' voices
+    before any voice user test.
+
+Tests:
+  [ ] Clear speech in a quiet room
+  [ ] Background noise
+  [ ] Silence
+  [ ] No microphone or permission blocked
+  [ ] Wrong recognition can be edited
+  [ ] Nothing runs without clicking Start
+  [ ] Works offline
+
+END OF GUIDE

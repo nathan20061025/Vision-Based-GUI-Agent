@@ -1,0 +1,169 @@
+PROJECT PROGRESS
+================
+[x] = done    [~] = partly done    [ ] = not done
+Last updated: 2026-11-25
+
+
+WHERE I AM NOW
+--------------
+Milestone 2 build and real checks are complete. No ML models are built.
+Next: finish the open items below, then plan Milestone 3.
+The code and notes are committed locally. To see whether they are pushed,
+run: git status -sb  ("ahead" means not pushed yet).
+
+
+MILESTONES
+----------
+[ ] M0  Confirm rules and scope, reading list, ethics
+[~] M1  Practice page + before/after check of one click
+        Code works. I ran it with --show. The AI explained the screenshots;
+        my own review and explanation are not confirmed.
+[x] M2  Mouse/keyboard control, click positions, stop controls, capture,
+        logging (see below; my understanding check is still open)
+[ ] M3  More practice sites, task files, automatic success checks
+[~] M4  Pixel-difference verifier (first version only; needs more data
+        and a threshold chosen on validation data)
+[ ] M5  Basic full agent: planner + OCR + text matching
+[ ] M6  Screen parser data and training
+[ ] M7  Grounding model
+[ ] M8  Verifier data and training
+[ ] M9  Vision-language model verifier
+[ ] M10 User interface
+[ ] M11 Final experiments
+[ ] M12 User test (needs ethics approval)
+[ ] M13 Reports, user manual, demo, viva practice
+
+Voice commands (optional): [ ] not started
+
+
+DONE BEFORE MILESTONE 2
+-----------------------
+[x] Connected the folder to GitHub and pushed test.txt
+[x] Reviewed the project proposal
+[x] Created the guide (with optional voice section) and simple summary
+[x] Set up .venv (Python 3.13), .gitignore, requirements.txt, README.md
+[x] Practice login page with a "broken button" switch
+[x] First pixel-difference rule (threshold not tuned) and milestone1.py
+
+
+MILESTONE 1 RESULTS
+-------------------
+First runs (one each, one page, hidden browser):
+Case            Changed pixels   Pixel rule   Real result
+Working button  1.06%            success      success
+Broken button   0.30%            failure      failure
+The 1.00% threshold is a placeholder, so "working" passed only narrowly.
+These are NOT research results.
+
+Bug: with --show, "Unable to capture screenshot" (my run, and 4 of 5
+repeats). 8 tries each: no pause 0/8, 1 s pause 8/8, GPU off 8/8.
+Cause not confirmed. Fix: 1 s pause after page load. Afterwards 20/20 runs
+completed (5 in each of 4 modes). One broken --show run changed 0.20%
+instead of 0.30% (reason not checked).
+
+
+MILESTONE 2 RESULTS
+-------------------
+Setup for all real tests: 1366 x 768, 100% scaling, one monitor, one
+practice page. Other setups are NOT tested. Playwright still finds the
+elements and checks the results.
+
+[x] Step 1, stop controls
+    My tests: screen-corner stop passed; Esc stopped a real click run.
+
+[x] Step 2, click positions
+    Preview: 3 dots at element centres (the first try stopped because the
+    browser was not active). My click run: error x=0.0, y=-0.4 page pixels
+    on all 3 targets (one completed run).
+
+[x] Step 3, click / type / press / scroll
+    First real run failed at "type username". Added printed details.
+    CAUSE (3 runs with details): Caps Lock was on, so "testuser" became
+    "TESTUSER". The first run printed no details.
+    FIX: typing stops with a message if Caps Lock is on (confirmed in a
+    real run).
+    Full passing runs reported after the fix: 5 (including capture and
+    logging runs). Same page and setup, so not proof of general reliability.
+    Esc during typing: confirmed by the log (type action "stopped").
+    Limit: the window check uses only the title "Practice Login", and focus
+    could change just after a check.
+
+[x] Step 4, full-screen capture
+    First real run kept 12 pictures (1366 x 768):
+    runs/capture/20261125_122650_381937 (still there; the AI did not open
+    them; my own check is not recorded).
+    Full-screen change in that run: click username 0.13%, type username
+    0.03%, tab 0.27%, type password 0.03%, click login 0.71%, scroll 0.42%.
+    Later runs varied: click username 0.16% once, type password 0.08% once,
+    scroll 0.45% once (reasons not checked).
+    FINDING: all were below the 1% threshold, so the rule would call them
+    failures although the demo's checks passed. Login was 1.06% as a page
+    screenshot. Do not just lower the threshold: choose it on separate
+    validation data with successes and failures.
+    CHANGE: pictures are now deleted when a run ends (--keep keeps them).
+    Real runs left no new folder. A killed program can leave files.
+
+[x] Step 5, logging (runs/logs/)
+    Finished run log: 6 actions, 6 screen changes, 5 checks, "finished".
+    Stopped run log: type "stopped", run "stopped" (Esc).
+    "testuser" and "test123" were not found in either log.
+
+Tests: 49 passed (2026-11-25). Executor, capture and logger tests use fake
+mouse/keyboard or fake pictures.
+
+
+OPEN ITEMS
+----------
+[ ] Explain in my own words: pixel_rule.py, milestone1.py, executor.py,
+    safety.py
+      - Why does click check again after moving the mouse?
+      - Why does typing check before every character?
+      - Why is Esc not an allowed key?
+[ ] Try changing the pixel threshold, then restore it to 0.01
+[ ] Decide: verifier uses full screen or only the browser page area
+    (AI recommended page area; check against the proposal's "full screen
+    capture" requirement with my supervisor)
+[ ] Delete or keep the old screenshot folder
+[x] Commit the code and notes
+[ ] Push (this makes the notes public too)
+[ ] Write down my laptop's CPU, RAM and GPU
+
+
+TO CONFIRM WITH SUPERVISOR
+--------------------------
+(The proposal has "YES" circled for the ethics form. Check whether it has
+been approved and what it covers.)
+[ ] AI-use rules in writing, and how to declare AI use
+[ ] Web-based or desktop application
+[ ] "Team" wording in the abstract
+[ ] Is fine-tuning enough for the three models
+[ ] Is a rule-based planner acceptable
+[ ] Which vision-language model, on what hardware
+[ ] Full screen or page area for the verifier
+[ ] Voice commands
+[ ] Deadlines and marking scheme
+
+
+AI USE LOG
+----------
+All on 2026-11-25, Claude Code (AI):
+- Reviewed the proposal; wrote the guide, summary, progress and handoff
+  files; set up the Git connection and pushed test.txt.
+- Wrote the Milestone 1 code, practice page, pixel rule, tests and setup
+  files; ran tests; diagnosed and fixed the screenshot error; explained
+  the screenshots.
+- Wrote all Milestone 2 code and tests: safety.py, stop_demo.py,
+  coordinates.py, milestone2_positions.py, executor.py,
+  milestone2_actions.py, capture.py (with auto-delete), logger.py;
+  installed pynput, PyAutoGUI and mss; helped find the Caps Lock cause and
+  added the fix; checked my run logs.
+- Tidied all the notes.
+
+
+WEEKLY NOTES (write these yourself)
+-----------------------------------
+Date:
+What I did:
+What I decided and why:
+Problems:
+Next:

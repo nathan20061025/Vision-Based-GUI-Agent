@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Practice Login</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f2f4f7; }
+    main { width: 320px; margin: 100px auto; padding: 24px; background: white; }
+    input, button { display: block; width: 100%; box-sizing: border-box;
+                    margin-top: 12px; padding: 10px; }
+  </style>
+</head>
+<body>
+  <!-- Practice page only. Fake accounts only. -->
+  <main id="login-view">
+    <h1>Practice Login</h1>
+    <form id="login-form">
+      <input id="username" placeholder="Username" autocomplete="off">
+      <input id="password" type="password" placeholder="Password">
+      <button id="login-button" type="submit">Login</button>
+    </form>
+    <p id="message"></p>
+  </main>
+
+  <script>
+    // Add ?broken=1 to the address to make the button do nothing.
+    const broken = new URLSearchParams(location.search).get("broken") === "1";
+
+    document.getElementById("login-form").addEventListener("submit", (event) => {
+      event.preventDefault();
+      if (broken) return;
+
+      const user = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+      if (user === "testuser" && password === "test123") {
+        document.getElementById("login-view").innerHTML =
+          '<h1 id="welcome">Welcome, testuser</h1><p>You are logged in.</p>';
+      } else {
+        document.getElementById("message").textContent = "Wrong username or password";
+      }
+    });
+  </script>
+</body>
+</html>

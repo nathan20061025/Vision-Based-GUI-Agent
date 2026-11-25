@@ -1,0 +1,155 @@
+HANDOFF FOR A NEW AI AGENT
+==========================
+Last updated 2026-11-25. It may be out of date: check the files and Git.
+
+
+PART 1: PROMPT TO COPY INTO THE NEW AGENT
+-----------------------------------------
+I am continuing my final-year project, "Vision-Based GUI Agent", and you
+are taking over from a previous AI assistant.
+
+Before doing anything:
+1. Read AGENT_HANDOFF.txt (all of it).
+2. Read SIMPLE_SUMMARY.txt, PROGRESS.txt, PROJECT_GUIDE.txt and README.md.
+3. Read the code: milestone1.py, milestone2_*.py, stop_demo.py, agent/,
+   practice_sites/, tests/.
+4. Check "git status" and "git log".
+For this first reply, read only. Do not edit, install, run demos, commit
+or push.
+
+Then tell me in simple English:
+- what the project is and how it should work
+- what is built and working, and what is not
+- anything in the notes that does not match the files
+- what we should do next
+Say clearly what you checked and what you only read in the notes. Then
+wait for me.
+
+--- end of prompt ---
+
+
+PART 2: THE PROJECT
+-------------------
+An agent on a laptop. The user types a web task. It captures the screen,
+finds elements, picks one, uses mouse/keyboard, checks whether the action
+worked, then continues, recovers or stops.
+
+  planner -> capture before -> screen parser + OCR -> grounding
+  -> executor -> wait -> capture after -> verifier
+  -> continue / retry / replan / stop
+
+Three ML models: (1) screen parser, (2) grounding model, (3) verifier,
+which is the MAIN CONTRIBUTION. The planner is not one of the three;
+rule-based is suggested at first.
+
+Research focus: does a small local verifier improve task success, and what
+does it cost in time and memory? Compare: no verifier, pixel-difference
+rule, trained verifier, larger vision-language model. Without a verifier
+there are no retries, so this measures verification plus recovery.
+
+Key rules: while running, the agent uses screenshots, not the DOM (DOM is
+only for labels and scoring). Split data by site/template. Tune only on
+validation data. Practice sites and fake accounts only, with a step limit
+and stop key. Never invent results or references.
+
+Unclear in the proposal: title says "Web-Based Application" but the text
+describes a desktop app; the abstract mentions a "team".
+
+Voice commands: optional, not in the approved proposal, needs supervisor
+approval, only after M9 (guide section 24).
+
+The proposal PDF was attached in an earlier chat. It was not seen in the
+project folder. If you need it, ask me. Do not commit it.
+
+
+PART 3: HOW TO WORK WITH ME
+---------------------------
+- Use simple English.
+- This is my final-year research project. I need it to be my own work that
+  I understand and can explain, with a real ML part.
+- I told the previous assistant that AI use is allowed. I also said to
+  make it "like a person". The previous assistant agreed to clear, simple
+  work I can explain, and declined to help hide AI use (for example fake
+  history or avoiding AI detection). The written rule is not yet
+  confirmed. Keep the AI use log in PROGRESS.txt up to date.
+- Explain the plan before new work, build in small tested steps, and help
+  me understand each part.
+- If I say "read only", do not change any files.
+- Ask before running anything that controls my real mouse or keyboard. In
+  this project I have run those tests myself. Full-screen pictures can show
+  private things.
+- NEVER add Claude/AI attribution to commits or pull requests (no
+  Co-Authored-By line, no "Generated with" line). This is about GitHub
+  contributor credit; it does not replace any AI declaration required by
+  my university.
+- Commit or push only when I ask.
+- The GitHub repo is PUBLIC. Never commit the proposal, personal details,
+  secrets, participant data or private screenshots.
+
+
+PART 4: CURRENT STATE
+---------------------
+Repo:   https://github.com/nathan20061025/Vision-Based-GUI-Agent.git
+Branch: main (tracks origin/main)
+First commit: acc359d "Add test file" (test.txt), pushed. (The repo was
+deleted and recreated once to remove an unwanted contributor entry.)
+A later commit holds the M1/M2 code AND the four note files (the user
+asked for the notes to be committed). Check "git status -sb" to see if it
+is pushed. Push only when asked; pushing makes the notes public.
+
+Setup: Windows 10, Python 3.13, .venv. Anaconda was not found. Versions are
+in requirements.txt. Check Python 3.13 support before adding ML packages.
+.venv/, runs/, .claude/ and PDFs are ignored by Git.
+
+Commands: see README.md. Tests: .venv\Scripts\python -m pytest
+(49 passed on 2026-11-25).
+
+Files:
+  practice_sites/login/index.html  login page; ?broken=1 disables login
+  milestone1.py            page screenshots around one Playwright click
+  stop_demo.py             harmless test of Esc and corner stop
+  milestone2_positions.py  preview dots; --click moves the real mouse
+  milestone2_actions.py    real mouse/keyboard login + scroll;
+                           --capture, --keep
+  agent/pixel_rule.py      baseline (tolerance 25, threshold 0.01, untuned)
+  agent/safety.py          stop state, corner, action limit, Esc listener
+  agent/coordinates.py     page position -> screen position
+  agent/executor.py        click, type, press, scroll with checks
+  agent/capture.py         full-screen before/after, auto-delete
+  agent/logger.py          JSON Lines run log (no typed text)
+  tests/                   unit tests (fakes for real devices)
+
+Status: M2 build and real checks are complete (detailed results are in
+PROGRESS.txt). M1 and M4 are partial. M0 is open. No ML models exist.
+Playwright still finds elements and checks results. Real tests used only
+1366x768, 100% scaling, one monitor and one page.
+
+Key finding: all full-screen changes in the demo were below the 1% pixel
+threshold (0.71% or less), although the demo checks passed. Early evidence
+only. Undecided: verifier on full screen or browser page area.
+
+Old screenshots remain in runs/capture/20261125_122650_381937 (not opened
+by the previous assistant).
+
+
+PART 5: NEXT
+------------
+1. My understanding checks and other open items (see PROGRESS.txt).
+2. Commit or push only when I ask.
+3. M3: explain the plan first. Practice sites, task files, automatic
+   success checks. Decide which sites/designs are reserved for validation
+   and testing BEFORE creating training data.
+
+Rough estimate given earlier (before M2): 5-10% of the whole project. It
+was not re-estimated. Most of the work remains.
+
+Guide notes: dataset sizes, models and run counts are suggestions, not
+tested. Library versions, licences and dataset terms mentioned in it were
+not checked online. Verify them before relying on them.
+
+
+PART 6: KEEPING NOTES
+---------------------
+After each piece of work, update PROGRESS.txt (done, test results, AI use).
+If the state changes, REWRITE the relevant part of this file instead of
+adding another "latest update" underneath.
