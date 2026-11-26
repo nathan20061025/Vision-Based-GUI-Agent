@@ -7,7 +7,7 @@ Last updated: 2026-11-26
 WHERE I AM NOW
 --------------
 Milestone 3 build and automatic checks are complete. No ML models are
-built. Next: my review of M3, the open items, then Milestone 4.
+built. Milestone 4 has started: step 1 (vary failure designs) is built.
 To see whether everything is committed and pushed,
 run: git status -sb  ("ahead" means not pushed yet).
 
@@ -22,8 +22,11 @@ MILESTONES
         logging (see below; my understanding check is still open)
 [x] M3  More practice sites, task files, automatic success checks
         (automatic checks passed; my review is still open)
-[~] M4  Pixel-difference verifier (first version only; needs more data
-        and a threshold chosen on validation data)
+[~] M4  Pixel-difference verifier (first rule; threshold not tuned)
+        Step 1 vary failure designs: [x] built, automatic checks passed
+        Step 2 define success per action: [ ]
+        Step 3 collect examples: [ ]   Step 4 tune: [ ]
+        Step 5 save chosen settings: [ ]
 [ ] M5  Basic full agent: planner + OCR + text matching
 [ ] M6  Screen parser data and training
 [ ] M7  Grounding model
@@ -137,9 +140,8 @@ LIMITATIONS (to fix or report):
     (guide suggests 30-50).
   - All sites were made by the same AI with simple layouts. They are not
     independent unseen designs.
-  - LEAKAGE RISK: every split uses the SAME popup and distractor banner,
-    so a verifier could learn "this banner means failure". Vary them per
-    split before collecting data.
+  - LEAKAGE RISK found: every split used the same popup and banner.
+    Addressed in M4 step 1 (see below).
   - At the checked size, scrolling is not part of any task.
   - Do not tune anything on the test site.
 
@@ -148,6 +150,31 @@ MY REVIEW:
 [ ] Check the 10 tasks and success rules
 [ ] Agree the train/validation/test split
 [ ] Design at least one test site myself (or from an independent source)
+
+
+MILESTONE 4 (started 2026-11-26)
+--------------------------------
+Agreed plan: collect mostly page screenshots from a hidden browser, then
+compare with a small REAL-screen sample from train/validation pages (I run
+it); change the method if they differ meaningfully. Score settings by
+balanced accuracy; also report false success rate; break ties by fewer
+false successes. No test-split collection or measurement until M11.
+Label rule: is the intended effect visible in the after image?
+
+Step 1 results:
+- Each split has its own 2 banner and 2 pop-up designs (12 in total),
+  chosen by data-split on each page; &variant=2 picks the second.
+- Added validation site "feedback" with 2 tasks. Now 7 sites, 12 tasks
+  (train 5, validation 5, test 2).
+- 62 unit tests passed. verify_tasks.py: 12/12 tasks, and no pop-up or
+  banner text or box style shared between designs.
+- MY run of verify_tasks.py: 12/12 tasks passed; design check passed.
+- The AI looked at a picture of the designs on 3 pages (runs/
+  fault_designs.png). My own check: not done.
+Limits: same author for all designs; all are text boxes or bars; the same
+close-button style and the same element IDs are used everywhere (the agent
+must not read IDs). Different designs reduce shortcut learning but do not
+prove there is none.
 
 
 OPEN ITEMS
@@ -202,6 +229,8 @@ All on 2026-11-25, Claude Code (AI):
 2026-11-26, Claude Code (AI): wrote all Milestone 3 files (5 new sites,
 faults.js, login page change, tasks, evaluation/, verify_tasks.py, tests);
 ran the checks; updated the notes.
+2026-11-26, Claude Code (AI): M4 plan and step 1 (new faults.js designs,
+feedback site and tasks, extra checks and tests).
 
 
 WEEKLY NOTES (write these yourself)

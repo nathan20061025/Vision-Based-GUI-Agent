@@ -102,7 +102,7 @@ in requirements.txt. Check Python 3.13 support before adding ML packages.
 .venv/, runs/, .claude/ and PDFs are ignored by Git.
 
 Commands: see README.md. Tests: .venv\Scripts\python -m pytest
-(60 passed on 2026-11-26).
+(62 passed on 2026-11-26).
 
 Files:
   practice_sites/login/index.html  login page; ?broken=1 disables login
@@ -127,8 +127,11 @@ M3 files: practice_sites/ (6 sites, sites.json, shared/faults.js), tasks/,
 evaluation/ (examiner only; agent/ must not import it), verify_tasks.py,
 tests/test_tasks.py. 60 tests passed; verify_tasks.py passed 10/10.
 M3 has been committed (check git log and git status -sb).
-Known risk: same popup/distractor in all splits; vary before collecting
-verifier data. Sites are AI-made, and the test split is only 1 site.
+M4 STARTED. Step 1 done: each split has its own popup/banner designs
+(2 variants each); added validation site 'feedback'. Now 7 sites, 12
+tasks; 62 tests and verify_tasks.py passed. Check git for commit state.
+M4 plan and rules are in PROGRESS.txt. Sites are AI-made, and the test
+split is only 1 site.
 
 Agreed default: verifier uses the browser page area (to be checked with
 the supervisor).
@@ -147,10 +150,10 @@ PART 5: NEXT
 ------------
 1. My review of M3 and the other open items (see PROGRESS.txt).
 2. Commit or push only when I ask.
-3. M4: first vary popup/distractor per split. Then collect success and
-   failure examples and choose the pixel threshold on VALIDATION only.
-   Then M5: planner + OCR + text matching (no DOM). Explain each plan
-   first; check OCR support for Python 3.13.
+3. M4 step 2: define success per action, with tests. Then collect
+   examples, tune on VALIDATION only, save settings. Then M5: planner +
+   OCR + text matching (no DOM). Explain each plan first; check OCR
+   support for Python 3.13.
 
 Rough estimate given earlier (before M2): 5-10% of the whole project. It
 was not re-estimated. Most of the work remains.

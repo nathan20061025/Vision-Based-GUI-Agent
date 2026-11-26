@@ -1,0 +1,30 @@
+{
+  "id": "feedback_good",
+  "site": "feedback",
+  "split": "validation",
+  "difficulty": "easy",
+  "instruction": "Choose the Good rating and send the feedback.",
+  "step_limit": 6,
+  "success": [
+    {
+      "selector": "#rating-good",
+      "check": "checked",
+      "expected": true
+    },
+    {
+      "selector": "#thanks",
+      "check": "text",
+      "expected": "Thank you for your feedback"
+    }
+  ],
+  "answer_key": [
+    {
+      "action": "click",
+      "selector": "#rating-good"
+    },
+    {
+      "action": "click",
+      "selector": "#send-button"
+    }
+  ]
+}

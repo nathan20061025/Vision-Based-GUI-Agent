@@ -1,0 +1,40 @@
+{
+  "id": "feedback_comment",
+  "site": "feedback",
+  "split": "validation",
+  "difficulty": "medium",
+  "instruction": "Choose the Poor rating, write the comment \"Too slow\" and send the feedback.",
+  "step_limit": 8,
+  "success": [
+    {
+      "selector": "#rating-poor",
+      "check": "checked",
+      "expected": true
+    },
+    {
+      "selector": "#comment",
+      "check": "value",
+      "expected": "Too slow"
+    },
+    {
+      "selector": "#thanks",
+      "check": "text",
+      "expected": "Thank you for your feedback"
+    }
+  ],
+  "answer_key": [
+    {
+      "action": "click",
+      "selector": "#rating-poor"
+    },
+    {
+      "action": "fill",
+      "selector": "#comment",
+      "value": "Too slow"
+    },
+    {
+      "action": "click",
+      "selector": "#send-button"
+    }
+  ]
+}

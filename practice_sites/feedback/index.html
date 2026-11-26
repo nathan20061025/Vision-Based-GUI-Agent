@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Practice Feedback</title>
+  <style>
+    body { font-family: "Courier New", monospace; margin: 0; display: flex;
+           min-height: 100vh; background: #ecfccb; }
+    aside { width: 210px; background: #3f6212; color: white; padding: 24px; }
+    main { padding: 28px 46px; }
+    fieldset { border: 2px solid #3f6212; margin: 0 0 18px; padding: 12px 18px; }
+    fieldset label { margin-right: 22px; }
+    textarea { display: block; width: 430px; height: 110px; margin-top: 8px; padding: 8px; }
+    button { margin-top: 18px; padding: 12px 34px; border: 3px solid #3f6212;
+             background: #bef264; font-weight: bold; }
+  </style>
+  <script src="../shared/faults.js" data-split="validation"></script>
+</head>
+<body>
+  <aside><h2>Help desk</h2><p>Practice page only.</p></aside>
+  <main>
+    <h1>Send feedback</h1>
+    <form id="feedback-form">
+      <fieldset>
+        <legend>How was it?</legend>
+        <label><input type="radio" name="rating" id="rating-good" value="good"> Good</label>
+        <label><input type="radio" name="rating" id="rating-okay" value="okay"> Okay</label>
+        <label><input type="radio" name="rating" id="rating-poor" value="poor"> Poor</label>
+      </fieldset>
+      <label for="comment">Your comment</label>
+      <textarea id="comment"></textarea>
+      <button id="send-button" type="submit">Send feedback</button>
+    </form>
+    <p id="thanks"></p>
+  </main>
+  <script>
+    document.getElementById("feedback-form").addEventListener("submit", (event) => {
+      event.preventDefault();
+      runMainAction(() => {
+        const rating = document.querySelector("input[name=rating]:checked");
+        document.getElementById("thanks").textContent =
+          rating ? "Thank you for your feedback" : "Please choose a rating";
+      });
+    });
+  </script>
+</body>
+</html>

@@ -38,6 +38,8 @@ in `tasks/` and every failure switch. It tests the sites, not an agent.
 - Sites are listed in `practice_sites/sites.json`, each in one split: train,
   validation or test.
 - Add `?fault=broken`, `slow`, `popup` or `distractor` to a page address.
+  Add `&variant=2` for the second pop-up or banner design. Each split has its
+  own designs.
 - `evaluation/` reads the page code to score results. `agent/` must not use it.
 
 ## Notes

@@ -7,6 +7,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 SPLITS = {"train", "validation", "test"}
 FAULTS = {"broken", "slow", "popup", "distractor"}
+VARIANTS = (1, 2)  # pop-up and banner designs per split
 CHECKS = {"count", "text", "value", "checked"}
 ACTIONS = {"fill", "click", "select"}
 REQUIRED = {"id", "site", "split", "difficulty", "instruction",
@@ -68,8 +69,11 @@ def load_tasks(root: Path = ROOT, split: str | None = None) -> list[Task]:
     return tasks
 
 
-def task_url(task: Task, fault: str | None = None, root: Path = ROOT) -> str:
+def task_url(task: Task, fault: str | None = None, root: Path = ROOT,
+             variant: int = 1) -> str:
     if fault is not None and fault not in FAULTS:
         raise ValueError(f"unknown fault {fault!r}")
+    if variant not in VARIANTS:
+        raise ValueError(f"unknown variant {variant!r}")
     page = root / "practice_sites" / load_sites(root)[task.site]["path"]
-    return page.as_uri() + (f"?fault={fault}" if fault else "")
+    return page.as_uri() + (f"?fault={fault}&variant={variant}" if fault else "")

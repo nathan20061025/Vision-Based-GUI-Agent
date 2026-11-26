@@ -60,3 +60,17 @@ def test_agent_never_imports_the_examiner_code():
             else:
                 continue
             assert not any(n.split(".")[0] == "evaluation" for n in names), path
+
+
+def test_each_page_declares_the_same_split_as_sites_json():
+    for name, site in load_sites().items():
+        page = (ROOT / "practice_sites" / site["path"]).read_text(encoding="utf-8")
+        tag = f'src="../shared/faults.js" data-split="{site["split"]}"'
+        assert page.count(tag) == 1, name
+
+
+def test_variant_is_added_to_the_address_and_checked():
+    task = load_tasks()[0]
+    assert task_url(task, "popup", variant=2).endswith("?fault=popup&variant=2")
+    with pytest.raises(ValueError):
+        task_url(task, "popup", variant=3)

@@ -131,14 +131,15 @@ Working so far (mouse and pictures tried on the login page only):
 A tool called Playwright still finds the buttons and checks the results.
 No ML models are built yet.
 
-Also built: 6 practice sites, 10 tasks, switchable failures and automatic
+Also built: 7 practice sites, 12 tasks, switchable failures and automatic
 success checks. These checks passed; no agent has done the tasks yet.
 
 One early finding: on full-screen pictures, every change in the demo was
 smaller than the simple rule's temporary 1% limit, even though the demo
 worked. This needs proper testing before I draw conclusions.
 
-Next: review the new sites, then improve the picture-change rule.
+Now: improving the picture-change rule. First step done: training,
+validation and testing have different pop-ups and banners.
 See PROGRESS.txt.
 
 CAN IT WORK ON REAL WEBSITES?

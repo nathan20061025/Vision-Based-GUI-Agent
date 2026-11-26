@@ -4,5 +4,6 @@
   "signup":   {"split": "train",      "path": "signup/index.html"},
   "settings": {"split": "validation", "path": "settings/index.html"},
   "todo":     {"split": "validation", "path": "todo/index.html"},
+  "feedback": {"split": "validation", "path": "feedback/index.html"},
   "shop":     {"split": "test",       "path": "shop/index.html"}
 }
