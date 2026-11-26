@@ -90,8 +90,8 @@ PART 3: HOW TO WORK WITH ME
 PART 4: CURRENT STATE (2026-11-26)
 ----------------------------------
 Repo:   https://github.com/nathan20061025/Vision-Based-GUI-Agent.git
-Branch: main (tracks origin/main). Work up to M4 steps 2-5 is pushed
-(commit b599ee5). Run "git log" and "git status -sb" for anything newer.
+Branch: main (tracks origin/main). Work up to M5 is pushed (commit
+27c8a80). Run "git log" and "git status -sb" for anything newer.
 (The repo was deleted and recreated once, early on, to remove an unwanted
 contributor entry.) The four note files are tracked and public. Commit or
 push only when asked.
@@ -101,7 +101,7 @@ in requirements.txt. Check Python 3.13 support before adding ML packages.
 .venv/, data/, models/, runs/, .claude/ and PDFs are ignored by Git.
 
 Commands: see README.md. Tests: .venv\Scripts\python -m pytest
-(80 passed on 2026-11-26). verify_tasks.py: 12/12.
+(120 passed on 2026-11-26). verify_tasks.py: 12/12.
 
 Files:
   practice_sites/          7 sites, sites.json (split per site),
@@ -115,7 +115,11 @@ Files:
   configs/pixel_rule.json  tuned pixel-rule settings
   results/pixel_rule_v1/   tuning report, all settings, capture comparison
   agent/                   pixel_rule.py, safety.py, coordinates.py,
-                           executor.py, capture.py, logger.py
+                           executor.py, capture.py, logger.py, ocr.py,
+                           planner.py, matching.py, loop.py,
+                           environments.py
+  run_agent.py             runs and scores the agent (hidden, or --real)
+  results/agent_m5/        agent results (hidden and real runs)
   milestone1.py            page pictures around one Playwright click (uses
                            the OLD placeholder settings 25 and 0.01)
   stop_demo.py             harmless test of Esc and corner stop
@@ -134,11 +138,14 @@ the agent falsely claimed success on 9/10, 10/10, 9/10 tasks. With
 pop-ups it gave up on all 10. Details and caveats: PROGRESS.txt.
 Computer: i5-2310 (no AVX2), 15.9 GB RAM, Intel HD Graphics.
 
-Status: M2 to M5 marked done (user's M2 explanation and M3 review are
-still open). M1 partial. M0 open. No ML models. No agent has solved the
-tasks. Playwright still finds elements; DOM checks are for labels/scoring.
-Real mouse tests: 1366x768, 100% scaling, one monitor, login page only.
-The M2 real mouse demo was not rerun after the later login page change.
+Status: M2 to M5 marked done (the user's understanding checks for M2 and
+M5 and reviews of M3 are still open). M1 partial. M0 open. No model has
+been trained in this project (the OCR is pretrained).
+The agent chooses targets from pictures only. Playwright opens pages,
+locates the page area in real mode, and scores results; DOM is used only
+for labels and scoring. Real runs used 1366x768, 100% scaling, one
+monitor; the real AGENT ran two validation tasks on normal pages. The M2
+real mouse demo was not rerun after the later login page change.
 
 M4 results: data version 2688cf59425a8971 (433 examples; re-create with
 python -m data_tools.collect). Chosen on VALIDATION: tolerance 15,
@@ -169,13 +176,15 @@ PART 5: NEXT
    first and wait. Computer has no AVX2 and no dedicated GPU shown:
    plan training on Colab/Kaggle, check licences and data splits.
 
-Rough estimate after M4 was 20-25% (not re-estimated after M5).
+Rough estimate after M5: 25-30% of the whole project built. It is a
+judgement, not a measure of understanding or a grade.
 
 Guide notes: dataset sizes, models and run counts are suggestions, not
 tested. Library versions, licences and dataset terms mentioned in it were
 not checked online. Verify them before relying on them.
 
-Real websites: not supported yet. Plan and safety rules are in guide
+Real websites: never tested. The planner knows only a few instruction
+patterns. Plan and safety rules are in guide
 section 25. Use approved practice sites and fake accounts only; the
 suggested public sites have not been checked.
 

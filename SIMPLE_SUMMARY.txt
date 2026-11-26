@@ -129,7 +129,7 @@ Working so far:
   - optional full-screen pictures, deleted after the run unless kept
   - a text log that does not save typed text
   - 7 practice sites, 12 tasks, switchable failures and automatic success
-    checks (no agent has done the tasks yet)
+    checks
   - the simple picture-change rule, tuned on validation examples
 
 A basic agent now reads the screen text (with a ready-made, already
@@ -150,10 +150,10 @@ Next: start my first model (the screen parser).
 See PROGRESS.txt.
 
 CAN IT WORK ON REAL WEBSITES?
-Not yet. It only knows my practice page. A basic version (text reading and
-simple rules) may later handle simple new pages. My ML models aim to
-handle more varied pages, but I must test that. It will not work on every
-website. I will use only approved practice sites with fake accounts, never
-real passwords. See guide section 25.
+I have not tested that. The basic agent understands only a few kinds of
+instruction and was built and tried on my practice pages. My ML models aim
+to handle more varied pages, but I must test that. It will not work on
+every website. I will use only approved practice sites with fake accounts,
+never real passwords. See guide section 25.
 
 More detail is in PROJECT_GUIDE.txt.

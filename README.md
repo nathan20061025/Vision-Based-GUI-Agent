@@ -1,7 +1,9 @@
 # Vision-Based GUI Agent
 
 A final-year project: a desktop agent that completes web tasks from the screen
-and verifies each action. **Early development.** No ML models are built yet.
+and verifies each action. **Early development.** A basic rule-based agent
+works on some practice tasks (it uses a pretrained text reader). No model
+has been trained in this project yet.
 
 ## Setup (Windows PowerShell)
 
