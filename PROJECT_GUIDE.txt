@@ -167,7 +167,8 @@ agent/capture.py, executor.py, safety.py and logger.py exist too. See
 PROGRESS.txt for what is built and tested. Milestone 3 added evaluation/
 (examiner only), tasks/, practice_sites/ and verify_tasks.py. Milestone 4
 added data_tools/, configs/ and results/ (the pixel rule is in
-agent/pixel_rule.py). As built: capture.py saves
+agent/pixel_rule.py). Milestone 5 added agent/ocr.py, planner.py,
+matching.py, loop.py, environments.py and run_agent.py. As built: capture.py saves
 before/after pictures and deletes them after a run unless --keep is used,
 and logger.py logs actions without typed text (section 14 suggests saving
 more for error analysis: turn picture keeping on only when needed).

@@ -1,0 +1,467 @@
+{
+  "time": "2026-11-26T16:19:57",
+  "NOTE": "development results, not test results",
+  "summary": {
+    "tasks": 10,
+    "really_succeeded": 10,
+    "claimed_success": 10,
+    "false_task_claims": 0,
+    "attempts_scored": 27,
+    "attempts_wrongly_called_success": 0,
+    "attempts_wrongly_called_failure": 0,
+    "median_ocr_seconds": 2.46,
+    "by_split": {
+      "train": "5/5",
+      "validation": "5/5"
+    }
+  },
+  "tasks": [
+    {
+      "task": "login_valid",
+      "split": "train",
+      "really_succeeded": true,
+      "agent_claimed_success": true,
+      "false_claim": false,
+      "status": "claimed_success",
+      "reason": "",
+      "actions": 3,
+      "attempts": [
+        {
+          "step": 0,
+          "action": "fill",
+          "x": 382,
+          "y": 223,
+          "why": "on the text 'username'",
+          "claimed": true,
+          "after_waiting": false,
+          "truly": true
+        },
+        {
+          "step": 1,
+          "action": "fill",
+          "x": 380,
+          "y": 274,
+          "why": "on the text 'password'",
+          "claimed": true,
+          "after_waiting": false,
+          "truly": true
+        },
+        {
+          "step": 2,
+          "action": "click",
+          "x": 500,
+          "y": 326,
+          "why": "on the text 'log in'",
+          "claimed": true,
+          "after_waiting": false,
+          "truly": true
+        }
+      ],
+      "ocr_seconds": [
+        3.28,
+        1.84,
+        3.32
+      ],
+      "seconds": 14.4
+    },
+    {
+      "task": "login_wrong_password",
+      "split": "train",
+      "really_succeeded": true,
+      "agent_claimed_success": true,
+      "false_claim": false,
+      "status": "claimed_success",
+      "reason": "",
+      "actions": 3,
+      "attempts": [
+        {
+          "step": 0,
+          "action": "fill",
+          "x": 382,
+          "y": 223,
+          "why": "on the text 'username'",
+          "claimed": true,
+          "after_waiting": false,
+          "truly": true
+        },
+        {
+          "step": 1,
+          "action": "fill",
+          "x": 380,
+          "y": 274,
+          "why": "on the text 'password'",
+          "claimed": true,
+          "after_waiting": false,
+          "truly": true
+        },
+        {
+          "step": 2,
+          "action": "click",
+          "x": 500,
+          "y": 326,
+          "why": "on the text 'log in'",
+          "claimed": true,
+          "after_waiting": false,
+          "truly": true
+        }
+      ],
+      "ocr_seconds": [
+        1.73,
+        2.11,
+        2.47
+      ],
+      "seconds": 12.2
+    },
+    {
+      "task": "search_git",
+      "split": "train",
+      "really_succeeded": true,
+      "agent_claimed_success": true,
+      "false_claim": false,
+      "status": "claimed_success",
+      "reason": "",
+      "actions": 2,
+      "attempts": [
+        {
+          "step": 0,
+          "action": "fill",
+          "x": 100,
+          "y": 155,
+          "why": "on the text 'search'",
+          "claimed": true,
+          "after_waiting": false,
+          "truly": true
+        },
+        {
+          "step": 1,
+          "action": "click",
+          "x": 476,
+          "y": 154,
+          "why": "on the text 'search'",
+          "claimed": true,
+          "after_waiting": false,
+          "truly": true
+        }
+      ],
+      "ocr_seconds": [
+        1.97,
+        1.88
+      ],
+      "seconds": 7.7
+    },
+    {
+      "task": "search_python",
+      "split": "train",
+      "really_succeeded": true,
+      "agent_claimed_success": true,
+      "false_claim": false,
+      "status": "claimed_success",
+      "reason": "",
+      "actions": 2,
+      "attempts": [
+        {
+          "step": 0,
+          "action": "fill",
+          "x": 100,
+          "y": 155,
+          "why": "on the text 'search'",
+          "claimed": true,
+          "after_waiting": false,
+          "truly": true
+        },
+        {
+          "step": 1,
+          "action": "click",
+          "x": 476,
+          "y": 154,
+          "why": "on the text 'search'",
+          "claimed": true,
+          "after_waiting": false,
+          "truly": true
+        }
+      ],
+      "ocr_seconds": [
+        2.6,
+        2.02
+      ],
+      "seconds": 8.8
+    },
+    {
+      "task": "signup_account",
+      "split": "train",
+      "really_succeeded": true,
+      "agent_claimed_success": true,
+      "false_claim": false,
+      "status": "claimed_success",
+      "reason": "",
+      "actions": 4,
+      "attempts": [
+        {
+          "step": 0,
+          "action": "fill",
+          "x": 128,
+          "y": 110,
+          "why": "on the text 'full name'",
+          "claimed": true,
+          "after_waiting": false,
+          "truly": true
+        },
+        {
+          "step": 1,
+          "action": "fill",
+          "x": 110,
+          "y": 179,
+          "why": "on the text 'email'",
+          "claimed": true,
+          "after_waiting": false,
+          "truly": true
+        },
+        {
+          "step": 2,
+          "action": "check",
+          "x": 177,
+          "y": 250,
+          "why": "on the text 'accept the terms'",
+          "claimed": true,
+          "after_waiting": false,
+          "truly": true
+        },
+        {
+          "step": 3,
+          "action": "click",
+          "x": 138,
+          "y": 298,
+          "why": "on the text 'sign up'",
+          "claimed": true,
+          "after_waiting": false,
+          "truly": true
+        }
+      ],
+      "ocr_seconds": [
+        3.36,
+        2.63,
+        2.55,
+        3.31
+      ],
+      "seconds": 19.6
+    },
+    {
+      "task": "feedback_comment",
+      "split": "validation",
+      "really_succeeded": true,
+      "agent_claimed_success": true,
+      "false_claim": false,
+      "status": "claimed_success",
+      "reason": "",
+      "actions": 3,
+      "attempts": [
+        {
+          "step": 0,
+          "action": "check",
+          "x": 563,
+          "y": 148,
+          "why": "on the text 'Poor'",
+          "claimed": true,
+          "after_waiting": false,
+          "truly": true
+        },
+        {
+          "step": 1,
+          "action": "fill",
+          "x": 361,
+          "y": 199,
+          "why": "on the text 'your comment'",
+          "claimed": true,
+          "after_waiting": false,
+          "truly": true
+        },
+        {
+          "step": 2,
+          "action": "click",
+          "x": 389,
+          "y": 384,
+          "why": "on the text 'send feedback'",
+          "claimed": true,
+          "after_waiting": false,
+          "truly": true
+        }
+      ],
+      "ocr_seconds": [
+        4.26,
+        3.09,
+        3.77
+      ],
+      "seconds": 16.9
+    },
+    {
+      "task": "feedback_good",
+      "split": "validation",
+      "really_succeeded": true,
+      "agent_claimed_success": true,
+      "false_claim": false,
+      "status": "claimed_success",
+      "reason": "",
+      "actions": 2,
+      "attempts": [
+        {
+          "step": 0,
+          "action": "check",
+          "x": 373,
+          "y": 149,
+          "why": "on the text 'Good'",
+          "claimed": true,
+          "after_waiting": false,
+          "truly": true
+        },
+        {
+          "step": 1,
+          "action": "click",
+          "x": 388,
+          "y": 385,
+          "why": "on the text 'send feedback'",
+          "claimed": true,
+          "after_waiting": false,
+          "truly": true
+        }
+      ],
+      "ocr_seconds": [
+        2.89,
+        3.36
+      ],
+      "seconds": 10.1
+    },
+    {
+      "task": "settings_dark_name",
+      "split": "validation",
+      "really_succeeded": true,
+      "agent_claimed_success": true,
+      "false_claim": false,
+      "status": "claimed_success",
+      "reason": "",
+      "actions": 3,
+      "attempts": [
+        {
+          "step": 0,
+          "action": "select",
+          "x": 218,
+          "y": 180,
+          "why": "on the text 'theme'",
+          "claimed": true,
+          "after_waiting": false,
+          "truly": true
+        },
+        {
+          "step": 1,
+          "action": "fill",
+          "x": 241,
+          "y": 244,
+          "why": "on the text 'display name'",
+          "claimed": true,
+          "after_waiting": false,
+          "truly": true
+        },
+        {
+          "step": 2,
+          "action": "click",
+          "x": 738,
+          "y": 312,
+          "why": "on the text 'save changes'",
+          "claimed": true,
+          "after_waiting": false,
+          "truly": true
+        }
+      ],
+      "ocr_seconds": [
+        2.4,
+        2.32,
+        2.11
+      ],
+      "seconds": 12.7
+    },
+    {
+      "task": "settings_notifications",
+      "split": "validation",
+      "really_succeeded": true,
+      "agent_claimed_success": true,
+      "false_claim": false,
+      "status": "claimed_success",
+      "reason": "",
+      "actions": 2,
+      "attempts": [
+        {
+          "step": 0,
+          "action": "check",
+          "x": 258,
+          "y": 117,
+          "why": "on the text 'email notifications'",
+          "claimed": true,
+          "after_waiting": false,
+          "truly": true
+        },
+        {
+          "step": 1,
+          "action": "click",
+          "x": 738,
+          "y": 312,
+          "why": "on the text 'save changes'",
+          "claimed": true,
+          "after_waiting": false,
+          "truly": true
+        }
+      ],
+      "ocr_seconds": [
+        2.38,
+        2.34
+      ],
+      "seconds": 8.6
+    },
+    {
+      "task": "todo_add",
+      "split": "validation",
+      "really_succeeded": true,
+      "agent_claimed_success": true,
+      "false_claim": false,
+      "status": "claimed_success",
+      "reason": "",
+      "actions": 3,
+      "attempts": [
+        {
+          "step": 0,
+          "action": "fill",
+          "x": 326,
+          "y": 114,
+          "why": "on the text 'task'",
+          "claimed": false,
+          "after_waiting": true,
+          "truly": false
+        },
+        {
+          "step": 0,
+          "action": "fill",
+          "x": 420,
+          "y": 175,
+          "why": "below the label 'task'",
+          "claimed": true,
+          "after_waiting": false,
+          "truly": true
+        },
+        {
+          "step": 1,
+          "action": "click",
+          "x": 728,
+          "y": 173,
+          "why": "on the text 'add'",
+          "claimed": true,
+          "after_waiting": false,
+          "truly": true
+        }
+      ],
+      "ocr_seconds": [
+        2.46,
+        2.41,
+        2.32
+      ],
+      "seconds": 16.6
+    }
+  ]
+}

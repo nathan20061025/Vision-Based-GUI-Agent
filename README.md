@@ -59,6 +59,27 @@ in `tasks/` and every failure switch. It tests the sites, not an agent.
   front and keep your mouse outside it. `Esc` stops it.
 - `milestone1.py` still uses the old placeholder settings.
 
+## Basic agent (Milestone 5)
+
+Plans with fixed rules, reads the screen with pretrained OCR (RapidOCR), chooses
+by text and position rules, and checks with the pixel rule. **No model has been
+trained in this project.** It understands only the instruction patterns listed
+in `agent/planner.py`.
+
+```powershell
+.venv\Scripts\python run_agent.py                      # hidden browser, 10 tasks
+.venv\Scripts\python run_agent.py --verifier none      # no checking
+.venv\Scripts\python run_agent.py --fault distractor   # with a failure on
+.venv\Scripts\python run_agent.py --real --task search_git         # REAL mouse
+.venv\Scripts\python run_agent.py --real --task search_git --ask   # you type
+```
+
+`--real` controls your real mouse and keyboard and captures the practice page
+area. Close private windows, turn Caps Lock off, keep the browser in front.
+Stop with `Esc` or a screen corner. The test split is refused. Playwright opens
+pages, locates the page area and scores results; the agent gets only pictures
+and the instruction. Results: `results/agent_m5/`.
+
 ## Notes
 
 - `--show` opens a visible browser (it may close quickly). `--broken` makes the

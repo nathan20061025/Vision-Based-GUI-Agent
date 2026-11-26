@@ -6,8 +6,9 @@ Last updated: 2026-11-26
 
 WHERE I AM NOW
 --------------
-Milestones 2, 3 and 4 are marked done (some of my understanding and
-review checks are still open). No ML models are built. Next: plan M5.
+Milestones 2 to 5 are marked done (some of my understanding and review
+checks are still open). No model has been trained in this project.
+Next: plan Milestone 6 (screen parser, the first model to train).
 To see whether everything is committed and pushed,
 run: git status -sb  ("ahead" means not pushed yet).
 
@@ -25,7 +26,9 @@ MILESTONES
 [x] M4  Pixel-difference verifier (a weak baseline; see results below)
         Steps 1-5: [x]
         My label sample check: [x]   My real-screen comparison: [x]
-[ ] M5  Basic full agent: planner + OCR + text matching
+[x] M5  Basic full agent: planner + OCR + text matching
+        Hidden runs and MY real runs done (see Milestone 5 below).
+        My understanding check is still open.
 [ ] M6  Screen parser data and training
 [ ] M7  Grounding model
 [ ] M8  Verifier data and training
@@ -231,6 +234,75 @@ MY CHECKS (both done 2026-11-26):
     Saved: results/pixel_rule_v1/capture_comparison.json
 
 
+MILESTONE 5 (2026-11-26)
+------------------------
+Built: agent/ocr.py, planner.py, matching.py, loop.py, environments.py;
+run_agent.py; tests/test_agent.py, test_environments.py.
+OCR: RapidOCR 3.10.0 + onnxruntime 1.32.0 (PRETRAINED, not my training).
+Models are inside the package. It read training pages with Python network
+connections blocked in the test (not a whole-computer offline test).
+Median OCR time about 2-3.7 s per picture (varied by run).
+Computer: Intel i5-2310 (about 2011, no AVX2), 15.9 GB RAM, Intel HD
+Graphics, Windows 10. Check whether it is a laptop or desktop before
+writing "regular laptop". Plan GPU training on Colab/Kaggle; test early
+whether the M9 model can run.
+
+RESULTS: hidden browser, 1000x700, 10 train+validation tasks, one run
+each, DEVELOPMENT results (not test results). No test-site runs.
+First run, no code changes between: train 5/5, then validation 5/5. But
+one step was wrongly accepted: the theme list value had not changed yet
+(the next click committed it). FIX: press Enter after choosing (found by
+looking at validation, so later validation numbers include this fix).
+First validation result kept in
+results/agent_m5/hidden_pixel_validation_FIRST_RUN_before_enter_fix.json
+
+After the fix:
+  condition            really   claimed   false task   attempts wrongly
+                       done     success   claims       called success
+  normal, pixel rule   10/10    10        0            0 of 27
+  normal, no checking  9/10     10        1            2 of 26
+  broken buttons       0/10     9         9            9 of 29
+  unrelated banner     0/10     10        10           10 of 27
+  slow (3 s delay)     1/10     10        9            9 of 27
+  pop-up open          0/10     0         0            0 of 12
+(Fault runs use the pixel rule and banner/pop-up design 1.)
+
+What this shows:
+- With a failing button, the agent usually still SAYS it succeeded: the
+  pixel rule accepts small unrelated changes.
+- Slow: any small change is accepted at once, so the agent does not wait.
+  Success is judged when the agent finishes; a delayed effect may appear
+  later.
+- Pop-up: it gave up honestly. The planner cannot close pop-ups.
+- Normal pages: only 1 task differed between pixel rule and no checking
+  (to-do recovery). Far too small to conclude the rule helps.
+- To-do: "task" matched the heading "My tasks"; recovery guessed "below
+  the label", which happened to hit the box (luck of this layout).
+
+WHY 10/10 IS OPTIMISTIC:
+- The same AI wrote the sites, instructions, planner and matching rules,
+  and had seen the validation pages. The planner only knows these
+  patterns; its word lists are from the instructions plus general
+  synonyms, but this is not independent.
+- Pages are simple; many labels are clickable HTML labels, which helps
+  text-only matching. Real sites may not behave like this.
+- One run per task, one window size.
+
+FINAL CHECKS:
+[x] MY real runs (2026-11-26, pixel rule, page-area screen pictures,
+    real mouse and keyboard, one run each):
+      search_git          succeeded, 2/2 steps truly correct, 14.6 s
+      settings_dark_name  succeeded, 3/3 steps truly correct, 22.4 s
+    (times are the agent loop only; saved in
+    results/agent_m5/real_runs.jsonl). Normal pages only.
+    A third run was stopped with Esc BEFORE the agent started (printed
+    'STOPPED', not 'Agent says: stopped').
+[x] MY Esc test during a real agent run: pressed during the first
+    mouse movement. Output 'stopped Esc key pressed'; log shows the
+    click 'stopped', no further actions, no false success claim.
+[ ] Supervisor: is a rule-based planner acceptable?
+
+
 OPEN ITEMS
 ----------
 [ ] Explain in my own words: pixel_rule.py, milestone1.py, executor.py,
@@ -288,6 +360,9 @@ feedback site and tasks, extra checks and tests).
 2026-11-26, Claude Code (AI): wrote M4 steps 2-5 (step rules, collector,
 tuning, label review, capture comparison, tests); ran collection and
 tuning; found and fixed two data problems; spot-checked labels.
+2026-11-26, Claude Code (AI): wrote all M5 code and tests, installed
+rapidocr and onnxruntime, ran hidden-browser runs, found and fixed the
+list (Enter) bug, updated notes.
 
 
 WEEKLY NOTES (write these yourself)

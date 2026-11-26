@@ -125,7 +125,16 @@ Files:
   verify_tasks.py          checks tasks and failures (hidden browser)
   tests/                   unit tests (fakes for real devices)
 
-Status: M2, M3, M4 marked done (user's M2 explanation and M3 review are
+M5 DONE (real runs: search_git and settings_dark_name passed, one run
+each; Esc during a real agent run stopped it): agent/ocr.py (pretrained RapidOCR), planner.py (rules,
+limited patterns), matching.py, loop.py, environments.py, run_agent.py.
+Hidden runs, train+validation: 10/10 on normal pages (optimistic: same
+author for sites and rules). With broken buttons / banners / slow pages
+the agent falsely claimed success on 9/10, 10/10, 9/10 tasks. With
+pop-ups it gave up on all 10. Details and caveats: PROGRESS.txt.
+Computer: i5-2310 (no AVX2), 15.9 GB RAM, Intel HD Graphics.
+
+Status: M2 to M5 marked done (user's M2 explanation and M3 review are
 still open). M1 partial. M0 open. No ML models. No agent has solved the
 tasks. Playwright still finds elements; DOM checks are for labels/scoring.
 Real mouse tests: 1366x768, 100% scaling, one monitor, login page only.
@@ -156,13 +165,11 @@ by the previous assistant).
 PART 5: NEXT
 ------------
 1. User's open checks (see PROGRESS.txt) and supervisor questions.
-2. M5: planner + OCR + simple matching + agent loop, with NO DOM for
-   choosing elements. Explain the plan first and wait. Check OCR support
-   for Python 3.13. The pixel rule often wrongly reports success, so log
-   those mistakes.
+2. M6 (screen parser, the first model trained here): explain the plan
+   first and wait. Computer has no AVX2 and no dedicated GPU shown:
+   plan training on Colab/Kaggle, check licences and data splits.
 
-Rough estimate after M4: 20-25% of the whole project built. It is a
-judgement, not a measure of understanding or a grade.
+Rough estimate after M4 was 20-25% (not re-estimated after M5).
 
 Guide notes: dataset sizes, models and run counts are suggestions, not
 tested. Library versions, licences and dataset terms mentioned in it were

@@ -132,7 +132,13 @@ Working so far:
     checks (no agent has done the tasks yet)
   - the simple picture-change rule, tuned on validation examples
 
-A tool called Playwright still finds the buttons. No ML models are built.
+A basic agent now reads the screen text (with a ready-made, already
+trained tool) and uses simple rules to choose. It finished all 10
+practice tasks on normal pages in a hidden browser. This is probably
+optimistic. With my real mouse, two tasks worked (one run each), and
+the Esc key stopped it. When buttons were
+broken or a banner appeared, it usually still said it succeeded.
+I have not trained any models yet.
 
 The picture-change rule is weak. On validation examples it spotted all
 the successes, but it also wrongly accepted about 6 in 10 failures,
@@ -140,8 +146,7 @@ because many failures change the screen too. I checked a sample of the
 labels, and a real-screen comparison passed on my laptop. These are not
 final test results.
 
-Next: build a basic full agent (read the screen text, use simple rules to
-choose, act and check).
+Next: start my first model (the screen parser).
 See PROGRESS.txt.
 
 CAN IT WORK ON REAL WEBSITES?

@@ -1,0 +1,302 @@
+{
+  "time": "2026-11-26T16:34:10",
+  "NOTE": "development results, not test results",
+  "summary": {
+    "tasks": 10,
+    "really_succeeded": 0,
+    "claimed_success": 0,
+    "false_task_claims": 0,
+    "attempts_scored": 12,
+    "attempts_wrongly_called_success": 0,
+    "attempts_wrongly_called_failure": 0,
+    "median_ocr_seconds": 3.68,
+    "by_split": {
+      "train": "0/5",
+      "validation": "0/5"
+    }
+  },
+  "tasks": [
+    {
+      "task": "login_valid",
+      "split": "train",
+      "really_succeeded": false,
+      "agent_claimed_success": false,
+      "false_claim": false,
+      "status": "gave_up",
+      "reason": "step 1 (fill): target text not found",
+      "actions": 0,
+      "attempts": [],
+      "ocr_seconds": [
+        4.16
+      ],
+      "seconds": 5.2
+    },
+    {
+      "task": "login_wrong_password",
+      "split": "train",
+      "really_succeeded": false,
+      "agent_claimed_success": false,
+      "false_claim": false,
+      "status": "gave_up",
+      "reason": "step 1 (fill): target text not found",
+      "actions": 0,
+      "attempts": [],
+      "ocr_seconds": [
+        2.47
+      ],
+      "seconds": 3.4
+    },
+    {
+      "task": "search_git",
+      "split": "train",
+      "really_succeeded": false,
+      "agent_claimed_success": false,
+      "false_claim": false,
+      "status": "gave_up",
+      "reason": "step 1 (fill): still failing after retries",
+      "actions": 3,
+      "attempts": [
+        {
+          "step": 0,
+          "action": "fill",
+          "x": 100,
+          "y": 156,
+          "why": "on the text 'search'",
+          "claimed": false,
+          "after_waiting": true,
+          "truly": false
+        },
+        {
+          "step": 0,
+          "action": "fill",
+          "x": 146,
+          "y": 200,
+          "why": "below the label 'search'",
+          "claimed": false,
+          "after_waiting": true,
+          "truly": false
+        },
+        {
+          "step": 0,
+          "action": "fill",
+          "x": 354,
+          "y": 156,
+          "why": "right of the label 'search'",
+          "claimed": false,
+          "after_waiting": true,
+          "truly": false
+        }
+      ],
+      "ocr_seconds": [
+        3.06,
+        2.48,
+        2.46
+      ],
+      "seconds": 25.0
+    },
+    {
+      "task": "search_python",
+      "split": "train",
+      "really_succeeded": false,
+      "agent_claimed_success": false,
+      "false_claim": false,
+      "status": "gave_up",
+      "reason": "step 1 (fill): still failing after retries",
+      "actions": 3,
+      "attempts": [
+        {
+          "step": 0,
+          "action": "fill",
+          "x": 100,
+          "y": 156,
+          "why": "on the text 'search'",
+          "claimed": false,
+          "after_waiting": true,
+          "truly": false
+        },
+        {
+          "step": 0,
+          "action": "fill",
+          "x": 146,
+          "y": 200,
+          "why": "below the label 'search'",
+          "claimed": false,
+          "after_waiting": true,
+          "truly": false
+        },
+        {
+          "step": 0,
+          "action": "fill",
+          "x": 354,
+          "y": 156,
+          "why": "right of the label 'search'",
+          "claimed": false,
+          "after_waiting": true,
+          "truly": false
+        }
+      ],
+      "ocr_seconds": [
+        3.29,
+        2.44,
+        3.42
+      ],
+      "seconds": 26.0
+    },
+    {
+      "task": "signup_account",
+      "split": "train",
+      "really_succeeded": false,
+      "agent_claimed_success": false,
+      "false_claim": false,
+      "status": "gave_up",
+      "reason": "step 1 (fill): still failing after retries",
+      "actions": 3,
+      "attempts": [
+        {
+          "step": 0,
+          "action": "fill",
+          "x": 128,
+          "y": 110,
+          "why": "on the text 'full name'",
+          "claimed": false,
+          "after_waiting": true,
+          "truly": false
+        },
+        {
+          "step": 0,
+          "action": "fill",
+          "x": 189,
+          "y": 157,
+          "why": "below the label 'full name'",
+          "claimed": false,
+          "after_waiting": true,
+          "truly": false
+        },
+        {
+          "step": 0,
+          "action": "fill",
+          "x": 378,
+          "y": 110,
+          "why": "right of the label 'full name'",
+          "claimed": false,
+          "after_waiting": true,
+          "truly": false
+        }
+      ],
+      "ocr_seconds": [
+        4.9,
+        4.39,
+        4.7
+      ],
+      "seconds": 31.5
+    },
+    {
+      "task": "feedback_comment",
+      "split": "validation",
+      "really_succeeded": false,
+      "agent_claimed_success": false,
+      "false_claim": false,
+      "status": "gave_up",
+      "reason": "step 1 (check): target text not found",
+      "actions": 0,
+      "attempts": [],
+      "ocr_seconds": [
+        5.32
+      ],
+      "seconds": 6.4
+    },
+    {
+      "task": "feedback_good",
+      "split": "validation",
+      "really_succeeded": false,
+      "agent_claimed_success": false,
+      "false_claim": false,
+      "status": "gave_up",
+      "reason": "step 1 (check): target text not found",
+      "actions": 0,
+      "attempts": [],
+      "ocr_seconds": [
+        3.85
+      ],
+      "seconds": 4.9
+    },
+    {
+      "task": "settings_dark_name",
+      "split": "validation",
+      "really_succeeded": false,
+      "agent_claimed_success": false,
+      "false_claim": false,
+      "status": "gave_up",
+      "reason": "step 1 (select): still failing after retries",
+      "actions": 3,
+      "attempts": [
+        {
+          "step": 0,
+          "action": "select",
+          "x": 218,
+          "y": 180,
+          "why": "on the text 'theme'",
+          "claimed": false,
+          "after_waiting": true,
+          "truly": false
+        },
+        {
+          "step": 0,
+          "action": "select",
+          "x": 447,
+          "y": 180,
+          "why": "right of the label 'theme'",
+          "claimed": false,
+          "after_waiting": true,
+          "truly": false
+        },
+        {
+          "step": 0,
+          "action": "select",
+          "x": 264,
+          "y": 224,
+          "why": "below the label 'theme'",
+          "claimed": false,
+          "after_waiting": true,
+          "truly": false
+        }
+      ],
+      "ocr_seconds": [
+        4.39,
+        3.71,
+        3.65
+      ],
+      "seconds": 28.9
+    },
+    {
+      "task": "settings_notifications",
+      "split": "validation",
+      "really_succeeded": false,
+      "agent_claimed_success": false,
+      "false_claim": false,
+      "status": "gave_up",
+      "reason": "step 1 (check): target text not found",
+      "actions": 0,
+      "attempts": [],
+      "ocr_seconds": [
+        4.6
+      ],
+      "seconds": 5.7
+    },
+    {
+      "task": "todo_add",
+      "split": "validation",
+      "really_succeeded": false,
+      "agent_claimed_success": false,
+      "false_claim": false,
+      "status": "gave_up",
+      "reason": "step 1 (fill): target text not found",
+      "actions": 0,
+      "attempts": [],
+      "ocr_seconds": [
+        2.89
+      ],
+      "seconds": 3.8
+    }
+  ]
+}
