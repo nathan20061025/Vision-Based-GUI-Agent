@@ -1,0 +1,282 @@
+TWO WAYS TO TRAIN A MODEL: FINE-TUNING AND FROM SCRATCH
+=======================================================
+Written 2026-11-26.
+
+STATUS NOW: no model has been trained or fine-tuned in this project.
+The text reader (RapidOCR) uses pretrained models, unchanged.
+
+
+1. BASIC WORDS
+--------------
+Machine learning (ML)  A computer learns patterns from data.
+Weights                The numbers a model learns during training.
+Pretrained model       A model that already learned from other data.
+Training from scratch  Start with new (usually random) weights.
+Fine-tuning            Start with pretrained weights and train further on
+                       your own data.
+
+BOTH ARE ML TRAINING. Using a pretrained model without training it is not.
+Changing settings in simple code (like the picture-change rule) is not.
+
+Simple comparison:
+  From scratch = teaching someone to read, starting from the alphabet.
+  Fine-tuning  = teaching someone who can already read to understand
+                 medical forms.
+
+
+2. COMPARISON (usual cases, not guarantees)
+-------------------------------------------
+                     From scratch         Fine-tuning
+Starting point       Usually random       Pretrained weights
+Data needed          Usually much more    Usually less
+Time and GPU         Usually more         Usually less
+Risk of poor result  Usually higher,      Usually lower
+                     with little data
+Counts as training   Yes                  Yes
+
+
+3. FINE-TUNING, STEP BY STEP
+----------------------------
+1. Choose a small pretrained model. Record its name, source and licence.
+2. Prepare and check your labelled data.
+3. Split it into training, validation and test groups.
+4. Change the output to match your task (for example your item types).
+5. Train. Often the early layers are kept fixed first, then some or all
+   are trained with a small learning rate.
+6. Use validation data to choose settings and when to stop.
+7. Save the model, settings, data version and training log.
+
+Good points: needs less data and computing power.
+Weak points: the earlier training may be on very different pictures
+(for example photographs, not screenshots), so it still must be tested.
+The pretrained model's licence also applies to your use.
+
+
+4. TRAINING FROM SCRATCH, STEP BY STEP
+--------------------------------------
+1. Choose a model design. Do NOT load pretrained weights.
+2. Prepare and check a larger, varied labelled dataset.
+3. Split it into training, validation and test groups.
+4. First do a small trial to check the code and estimate the time. The
+   trial does not show how good the final model will be.
+5. Train for longer. Watch training and validation results.
+6. Watch for overfitting: good on training data, poor on validation.
+7. Save the model, settings, data version, random seed and training log.
+
+Good points: you control the whole training and do not depend on earlier
+weights.
+Weak points: usually needs much more data and GPU time. Free cloud
+notebooks have usage limits, so save checkpoints often.
+
+
+5. HOW TO TELL WHICH ONE THE CODE DOES
+--------------------------------------
+Check the STARTING WEIGHTS. These are examples; check the current
+documentation and your installed version before using them.
+
+Ultralytics YOLO:
+  Fine-tuning:
+      model = YOLO("yolo11n.pt")       # pretrained weights
+      model.train(data="screens.yaml")
+
+  From scratch:
+      model = YOLO("yolo11n.yaml")     # model design only
+      model.train(data="screens.yaml", pretrained=False)
+
+  screens.yaml describes your dataset and item types.
+
+PyTorch / torchvision:
+      from torchvision.models import resnet18, ResNet18_Weights
+      model = resnet18(weights=ResNet18_Weights.DEFAULT)  # fine-tuning start
+      model = resnet18(weights=None)                      # from scratch
+  These lines only create the model. You still need to adjust the output
+  and train it.
+
+Warnings:
+  - The file ending alone is not proof. A .pt file may be your own saved
+    checkpoint, and a model built from .yaml can still load weights.
+  - Read the training log for "weights loaded/transferred" messages.
+  - You usually cannot tell the method from a finished model or its score.
+    Write it down when you train.
+
+
+6. FOR THE THREE MODELS IN THIS PROJECT
+---------------------------------------
+Suggested plan (not built, not tested, needs supervisor agreement):
+
+Model             Fine-tuning option          From-scratch option
+1 Screen parser   Small pretrained YOLO,      Same YOLO design without
+                  trained on screenshots      pretrained weights
+2 Grounding       Small pretrained text (or   Small ranking model trained
+                  image-text) model, trained  only on your examples (text,
+                  to rank screen items        type and position features)
+3 Verifier        Pretrained small CNN for    Own small CNN on before and
+                  before/after pictures plus  after pictures plus action
+                  action information          information
+                  (new layers start random)
+
+Note for model 2: a ranking model that takes features from an unchanged
+pretrained text model is NOT purely from scratch. Describe each part.
+
+My suggestion: fine-tune, because data and GPU time are limited.
+If time allows (optional): do both for ONE model, for example the
+verifier, and compare them.
+
+
+7. HOW TO COMPARE THE TWO FAIRLY
+--------------------------------
+Keep the same: model design, data, splits, image size and scoring.
+Give each method a fair amount of tuning, and report training time.
+Use validation data to choose settings. Keep test data for the final
+experiments. If possible, train each more than once with different random
+seeds, because one run can be lucky.
+Measures:
+  Parser     precision, recall, mAP
+  Grounding  top-1 and top-3 accuracy
+  Verifier   precision, recall, F1, balanced accuracy, false success rate
+All        speed on this computer, memory use, model size
+Do not decide the winner before testing.
+
+
+8. WHAT THE PROPOSAL SAYS
+-------------------------
+It requires three trained models and mentions building and training a CNN
+and other models, small models, free cloud notebooks (Colab or Kaggle) and
+Ultralytics YOLO. In the text reviewed, neither "fine-tune" nor "from
+scratch" is stated.
+It also says public datasets such as Rico, ScreenSpot and MiniWoB++, with
+self-collected screens, will be used for training and testing. So plan to
+use suitable public data too, or get the supervisor's agreement to change
+this. Check each dataset's licence, labels and suitability (not yet
+checked). Keep training and test data separate.
+
+
+9. RECORD THIS FOR EVERY TRAINING RUN
+-------------------------------------
+[ ] Method: fine-tuned, or from scratch
+[ ] Starting model and weights (or "random")
+[ ] Dataset name, version, source and licence
+[ ] How the data was split
+[ ] Settings: epochs, batch size, image size, learning rate, frozen layers
+[ ] Random seed
+[ ] Library versions and hardware used (Colab/Kaggle GPU)
+[ ] Training time and log
+[ ] Validation results and main mistakes
+[ ] How AI tools helped
+
+
+10. HOW TO SAY IT IN THE REPORT AND VIVA
+----------------------------------------
+Use only AFTER you have really done it, and change it to match the facts:
+
+Fine-tuned:
+  "I started with a pretrained model and trained it further on my labelled
+  screenshots."
+
+From scratch:
+  "I started with random weights and trained the model only on my training
+  data."
+
+
+11. QUESTION TO ASK THE SUPERVISOR
+----------------------------------
+"Can I fine-tune pretrained models for the three required models, or do you
+expect any of them to be trained from scratch? Which public datasets must
+I use?"
+
+
+12. THE PLAN: DATA -> TRAIN -> CONNECT
+--------------------------------------
+For EACH of the three models:
+  1. Get data: suitable public data, my own collected screens, or both.
+     (No single ready-made dataset is needed for everything.)
+  2. Label it and check the labels.
+  3. Check licences and rules. Split into training, validation and test.
+  4. Train or fine-tune with the training data.
+  5. Check it with the validation data.
+  6. Save the model, settings, data version and results.
+  7. Connect it to the agent.
+  8. Test the agent again: does the model help?
+
+What data each model needs:
+  Model              Data shows                       Likely source
+  1 Screen parser    Screens with boxes and labels    Suitable public data
+                     (buttons, text boxes, links...)  + my own screens
+  2 Grounding        Instruction, screen and the      Suitable public data
+                     correct item                     + my practice pages
+  3 Verifier         Before and after pictures, the   Mainly my own examples,
+                     action, success or failure       + public data if
+                                                      suitable
+
+Where each model connects (milestones):
+  M6  Screen parser   Adds finding items on the screen. Works together with
+                      the text reader.
+  M7  Grounding       Replaces or improves agent/matching.py.
+  M8  Verifier        Replaces the picture-change rule as the agent's check.
+
+Agent flow when all three are connected:
+  instruction -> planner -> screenshot -> screen parser + text reader
+  -> grounding model -> action -> verifier -> continue or retry
+
+KEEP the current simple methods (text matching and picture-change rule) so
+they can be switched on and compared with the trained models. A new model
+may not do better. Test it on the same validation examples and report the
+real result. Keep test data for the final experiments (M11).
+
+A model is not finished after one training run. It needs checked labels,
+saved results, validation measures, a working connection to the agent and
+a record of its mistakes and limits. It does not need perfect results.
+
+NOTE: none of this training or model connection has been done yet.
+
+
+13. DATASETS: TO BE ADDED LATER
+-------------------------------
+STATUS: I will find the datasets later. None has been chosen or checked
+for model training yet.
+
+For each dataset, give the AI assistant:
+  [ ] its link or folder location
+  [ ] which model it is for (parser, grounding or verifier)
+  [ ] one or two sample records with no private information
+  [ ] its label format and licence
+Do not put datasets in the public GitHub repo (data/ is ignored by Git).
+
+What happens after that:
+  1. Check the dataset: labels, suitability, licence, splits. It may turn
+     out to be unsuitable.
+  2. Change the code: convert and load the data.
+  3. Write training and evaluation code or a notebook.
+  4. Do a small trial run.
+  5. Full training: I RUN IT in my own Kaggle or Colab account.
+     (This computer has no dedicated graphics card shown.)
+  6. Check validation results and mistakes together.
+  7. Connect the model to the agent and test it again.
+Do one model at a time: parser, then grounding, then verifier.
+AI help must follow my university's rules and be recorded in PROGRESS.txt.
+
+
+14. CODE CHANGES NEEDED FOR THE MODELS (not done yet)
+-----------------------------------------------------
+Parser     New agent/parser.py returning each item's type, box and
+           confidence; combine it with the text reader.
+Grounding  agent/matching.py uses only words and position rules. A model
+           needs the target words, the screenshot and the parser's items,
+           and returns ranked choices.
+Verifier   agent/loop.py gives the checker only the before and after
+           pictures. Also give it the action type, the actual click
+           position and the expected result (for example the text).
+All        Training and evaluation code; model settings; switches between
+           simple methods and models; run_agent.py comparison option;
+           tests; model-running libraries in requirements.txt.
+
+Data warnings:
+  - Do not give a model "intended_point" or the whole "effect" field from
+    data/pixel_v1/records.jsonl. The running agent does not have them
+    ("effect" contains page-code selectors). Prepare only information the
+    agent really has.
+  - Before verifier training, add pop-ups that appear between the before
+    and after pictures.
+  - The practice pages have no links yet; the parser must find links.
+  - Fix the repeat-click risk: a button may be clicked again although the
+    first click worked.

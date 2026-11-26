@@ -363,6 +363,8 @@ tuning; found and fixed two data problems; spot-checked labels.
 2026-11-26, Claude Code (AI): wrote all M5 code and tests, installed
 rapidocr and onnxruntime, ran hidden-browser runs, found and fixed the
 list (Enter) bug, updated notes.
+2026-11-26, Claude Code (AI): wrote TRAINING_METHODS.txt (fine-tuning
+and from-scratch training; data, training and connection plan).
 
 
 WEEKLY NOTES (write these yourself)

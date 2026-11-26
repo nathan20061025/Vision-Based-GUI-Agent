@@ -189,6 +189,11 @@ section 25. Use approved practice sites and fake accounts only; the
 suggested public sites have not been checked.
 
 
+Also read TRAINING_METHODS.txt: fine-tuning vs from scratch, and the
+data -> train -> connect plan for the three models. The proposal says
+public datasets AND own screens will be used. No model is trained yet.
+
+
 PART 6: KEEPING NOTES
 ---------------------
 After each piece of work, update PROGRESS.txt (done, test results, AI use).
