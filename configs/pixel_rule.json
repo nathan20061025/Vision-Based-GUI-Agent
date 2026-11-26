@@ -1,5 +1,5 @@
 {
-  "status": "provisional: label check and real-screen comparison needed",
+  "status": "checked for data version below: user label sample and real-screen comparison passed",
   "pixel_tolerance": 15,
   "change_threshold": 0.0001,
   "chosen_on": "validation split only",

@@ -1,0 +1,306 @@
+{
+  "settings": [
+    15,
+    0.0001
+  ],
+  "summary": {
+    "examples": 29,
+    "agreement": 1.0,
+    "median_difference": 0.0,
+    "page_correct": 14,
+    "screen_correct": 14,
+    "passed": true
+  },
+  "rows": [
+    {
+      "task": "settings_notifications",
+      "step": 0,
+      "case": "normal",
+      "label": true,
+      "page_share": 0.0002570046361620641,
+      "screen_share": 0.0002570046361620641,
+      "page_says": true,
+      "screen_says": true
+    },
+    {
+      "task": "settings_notifications",
+      "step": 0,
+      "case": "miss",
+      "label": false,
+      "page_share": 0.005667540146475845,
+      "screen_share": 0.005667540146475845,
+      "page_says": true,
+      "screen_says": true
+    },
+    {
+      "task": "settings_notifications",
+      "step": 0,
+      "case": "popup1",
+      "label": false,
+      "page_share": 0.0,
+      "screen_share": 0.0,
+      "page_says": false,
+      "screen_says": false
+    },
+    {
+      "task": "settings_notifications",
+      "step": 1,
+      "case": "normal",
+      "label": true,
+      "page_share": 0.001202714506483908,
+      "screen_share": 0.001202714506483908,
+      "page_says": true,
+      "screen_says": true
+    },
+    {
+      "task": "settings_notifications",
+      "step": 1,
+      "case": "miss",
+      "label": false,
+      "page_share": 0.00022508902774978162,
+      "screen_share": 0.00022508902774978162,
+      "page_says": true,
+      "screen_says": true
+    },
+    {
+      "task": "settings_notifications",
+      "step": 1,
+      "case": "popup1",
+      "label": false,
+      "page_share": 0.0,
+      "screen_share": 0.0,
+      "page_says": false,
+      "screen_says": false
+    },
+    {
+      "task": "settings_notifications",
+      "step": 1,
+      "case": "broken",
+      "label": false,
+      "page_share": 0.00022508902774978162,
+      "screen_share": 0.00022508902774978162,
+      "page_says": true,
+      "screen_says": true
+    },
+    {
+      "task": "settings_notifications",
+      "step": 1,
+      "case": "distractor1",
+      "label": false,
+      "page_share": 0.0368810051736881,
+      "screen_share": 0.0368810051736881,
+      "page_says": true,
+      "screen_says": true
+    },
+    {
+      "task": "todo_add",
+      "step": 0,
+      "case": "normal",
+      "label": true,
+      "page_share": 0.004782301955250957,
+      "screen_share": 0.004782301955250957,
+      "page_says": true,
+      "screen_says": true
+    },
+    {
+      "task": "todo_add",
+      "step": 0,
+      "case": "miss",
+      "label": false,
+      "page_share": 0.0,
+      "screen_share": 0.0,
+      "page_says": false,
+      "screen_says": false
+    },
+    {
+      "task": "todo_add",
+      "step": 0,
+      "case": "popup1",
+      "label": false,
+      "page_share": 0.0,
+      "screen_share": 0.0,
+      "page_says": false,
+      "screen_says": false
+    },
+    {
+      "task": "todo_add",
+      "step": 0,
+      "case": "wrong_text",
+      "label": false,
+      "page_share": 0.004720150507290197,
+      "screen_share": 0.0047335886582006315,
+      "page_says": true,
+      "screen_says": true
+    },
+    {
+      "task": "todo_add",
+      "step": 1,
+      "case": "normal",
+      "label": true,
+      "page_share": 0.00584727541490291,
+      "screen_share": 0.005865752872404757,
+      "page_says": true,
+      "screen_says": true
+    },
+    {
+      "task": "todo_add",
+      "step": 1,
+      "case": "miss",
+      "label": false,
+      "page_share": 0.003695491500369549,
+      "screen_share": 0.0037206880333266142,
+      "page_says": true,
+      "screen_says": true
+    },
+    {
+      "task": "todo_add",
+      "step": 1,
+      "case": "popup1",
+      "label": false,
+      "page_share": 0.0017049653967614055,
+      "screen_share": 0.0017049653967614055,
+      "page_says": true,
+      "screen_says": true
+    },
+    {
+      "task": "todo_add",
+      "step": 1,
+      "case": "broken",
+      "label": false,
+      "page_share": 0.003695491500369549,
+      "screen_share": 0.003695491500369549,
+      "page_says": true,
+      "screen_says": true
+    },
+    {
+      "task": "todo_add",
+      "step": 1,
+      "case": "distractor1",
+      "label": false,
+      "page_share": 0.03925115904051602,
+      "screen_share": 0.03927635557347309,
+      "page_says": true,
+      "screen_says": true
+    },
+    {
+      "task": "feedback_comment",
+      "step": 0,
+      "case": "normal",
+      "label": true,
+      "page_share": 0.00016293757978902104,
+      "screen_share": 0.00016293757978902104,
+      "page_says": true,
+      "screen_says": true
+    },
+    {
+      "task": "feedback_comment",
+      "step": 0,
+      "case": "miss",
+      "label": false,
+      "page_share": 0.0,
+      "screen_share": 0.0,
+      "page_says": false,
+      "screen_says": false
+    },
+    {
+      "task": "feedback_comment",
+      "step": 0,
+      "case": "popup1",
+      "label": false,
+      "page_share": 0.0,
+      "screen_share": 0.0,
+      "page_says": false,
+      "screen_says": false
+    },
+    {
+      "task": "feedback_comment",
+      "step": 1,
+      "case": "normal",
+      "label": true,
+      "page_share": 0.004249815225424981,
+      "screen_share": 0.004249815225424981,
+      "page_says": true,
+      "screen_says": true
+    },
+    {
+      "task": "feedback_comment",
+      "step": 1,
+      "case": "miss",
+      "label": false,
+      "page_share": 0.00010414566955586911,
+      "screen_share": 0.00010414566955586911,
+      "page_says": true,
+      "screen_says": true
+    },
+    {
+      "task": "feedback_comment",
+      "step": 1,
+      "case": "popup1",
+      "label": false,
+      "page_share": 0.0,
+      "screen_share": 0.0,
+      "page_says": false,
+      "screen_says": false
+    },
+    {
+      "task": "feedback_comment",
+      "step": 1,
+      "case": "wrong_text",
+      "label": false,
+      "page_share": 0.004224618692467917,
+      "screen_share": 0.004224618692467917,
+      "page_says": true,
+      "screen_says": true
+    },
+    {
+      "task": "feedback_comment",
+      "step": 2,
+      "case": "normal",
+      "label": true,
+      "page_share": 0.005198884633474434,
+      "screen_share": 0.005224081166431499,
+      "page_says": true,
+      "screen_says": true
+    },
+    {
+      "task": "feedback_comment",
+      "step": 2,
+      "case": "miss",
+      "label": false,
+      "page_share": 0.003838271853792918,
+      "screen_share": 0.0038634683867499833,
+      "page_says": true,
+      "screen_says": true
+    },
+    {
+      "task": "feedback_comment",
+      "step": 2,
+      "case": "popup1",
+      "label": false,
+      "page_share": 0.003829873009473896,
+      "screen_share": 0.0038550695424309613,
+      "page_says": true,
+      "screen_says": true
+    },
+    {
+      "task": "feedback_comment",
+      "step": 2,
+      "case": "broken",
+      "label": false,
+      "page_share": 0.003838271853792918,
+      "screen_share": 0.003838271853792918,
+      "page_says": true,
+      "screen_says": true
+    },
+    {
+      "task": "feedback_comment",
+      "step": 2,
+      "case": "distractor1",
+      "label": false,
+      "page_share": 0.039677820331922325,
+      "screen_share": 0.03970301686487939,
+      "page_says": true,
+      "screen_says": true
+    }
+  ]
+}

@@ -87,66 +87,67 @@ PART 3: HOW TO WORK WITH ME
   secrets, participant data or private screenshots.
 
 
-PART 4: CURRENT STATE
----------------------
+PART 4: CURRENT STATE (2026-11-26)
+----------------------------------
 Repo:   https://github.com/nathan20061025/Vision-Based-GUI-Agent.git
-Branch: main (tracks origin/main)
-First commit: acc359d "Add test file" (test.txt), pushed. (The repo was
-deleted and recreated once to remove an unwanted contributor entry.)
-A later commit holds the M1/M2 code AND the four note files (the user
-asked for the notes to be committed). Check "git status -sb" to see if it
-is pushed. Push only when asked; pushing makes the notes public.
+Branch: main (tracks origin/main). Work up to M4 steps 2-5 is pushed
+(commit b599ee5). Run "git log" and "git status -sb" for anything newer.
+(The repo was deleted and recreated once, early on, to remove an unwanted
+contributor entry.) The four note files are tracked and public. Commit or
+push only when asked.
 
 Setup: Windows 10, Python 3.13, .venv. Anaconda was not found. Versions are
 in requirements.txt. Check Python 3.13 support before adding ML packages.
-.venv/, runs/, .claude/ and PDFs are ignored by Git.
+.venv/, data/, models/, runs/, .claude/ and PDFs are ignored by Git.
 
 Commands: see README.md. Tests: .venv\Scripts\python -m pytest
-(80 passed on 2026-11-26).
+(80 passed on 2026-11-26). verify_tasks.py: 12/12.
 
 Files:
-  practice_sites/login/index.html  login page; ?broken=1 disables login
-  milestone1.py            page screenshots around one Playwright click
+  practice_sites/          7 sites, sites.json (split per site),
+                           shared/faults.js (failures; own pop-up and
+                           banner designs per split)
+  tasks/                   12 task files (train 5, validation 5, test 2)
+  evaluation/              examiner only (DOM): tasks.py, checker.py,
+                           step_rules.py. agent/ must NOT import it.
+  data_tools/              cases.py, collect.py, tune_pixel_rule.py,
+                           label_review.py, compare_capture.py
+  configs/pixel_rule.json  tuned pixel-rule settings
+  results/pixel_rule_v1/   tuning report, all settings, capture comparison
+  agent/                   pixel_rule.py, safety.py, coordinates.py,
+                           executor.py, capture.py, logger.py
+  milestone1.py            page pictures around one Playwright click (uses
+                           the OLD placeholder settings 25 and 0.01)
   stop_demo.py             harmless test of Esc and corner stop
   milestone2_positions.py  preview dots; --click moves the real mouse
   milestone2_actions.py    real mouse/keyboard login + scroll;
                            --capture, --keep
-  agent/pixel_rule.py      baseline (tolerance 25, threshold 0.01, untuned)
-  agent/safety.py          stop state, corner, action limit, Esc listener
-  agent/coordinates.py     page position -> screen position
-  agent/executor.py        click, type, press, scroll with checks
-  agent/capture.py         full-screen before/after, auto-delete
-  agent/logger.py          JSON Lines run log (no typed text)
+  verify_tasks.py          checks tasks and failures (hidden browser)
   tests/                   unit tests (fakes for real devices)
 
-Status: M2 build and real checks are complete; M3 build and automatic
-checks are complete, user review open (details in PROGRESS.txt). M1 and M4
-are partial. M0 is open. No ML models exist.
+Status: M2, M3, M4 marked done (user's M2 explanation and M3 review are
+still open). M1 partial. M0 open. No ML models. No agent has solved the
+tasks. Playwright still finds elements; DOM checks are for labels/scoring.
+Real mouse tests: 1366x768, 100% scaling, one monitor, login page only.
+The M2 real mouse demo was not rerun after the later login page change.
 
-M3 files: practice_sites/ (6 sites, sites.json, shared/faults.js), tasks/,
-evaluation/ (examiner only; agent/ must not import it), verify_tasks.py,
-tests/test_tasks.py. 60 tests passed; verify_tasks.py passed 10/10.
-M3 has been committed (check git log and git status -sb).
-M4 BUILT, NOT DONE. Step rules (evaluation/step_rules.py), collector
-(data_tools/), tuning, label review and capture comparison exist. 80 tests
-passed. Data version 2688cf59425a8971 (433 examples; data/ is not in Git,
-re-create with python -m data_tools.collect). Validation: chosen settings
-(tolerance 15, threshold 0.0001) give 69.2% balanced accuracy and 61.5%
-false successes: a weak baseline. Settings are PROVISIONAL until the USER
-(1) checks the label sheets and (2) runs data_tools.compare_capture on the
-real screen. Do not run (2) for them without asking. No test-split data may
-be collected or measured until M11. Details in PROGRESS.txt. Before M8,
-add pop-ups that appear between the before and after pictures.
-Sites are AI-made; the test split is only 1 site.
+M4 results: data version 2688cf59425a8971 (433 examples; re-create with
+python -m data_tools.collect). Chosen on VALIDATION: tolerance 15,
+threshold 0.0001; balanced accuracy 69.2%, false success rate 61.5%: a
+weak baseline, not a test result. User checked the 24-label sample (all
+right). User's real-screen comparison passed (29/29 same answer, median
+difference 0.0; one setup). Never collect or measure test-split data
+before M11.
 
-Agreed default: verifier uses the browser page area (to be checked with
-the supervisor).
-Playwright still finds elements and checks results. Real tests used only
-1366x768, 100% scaling, one monitor and one page.
+Before M8: add pop-ups that appear BETWEEN the before and after pictures.
+Dots cannot show an exact password, so a screenshot-only verifier may not
+detect a wrong password of the same length. Sites are AI-made and the test
+split is only 1 site.
 
-Key finding: all full-screen changes in the demo were below the 1% pixel
-threshold (0.71% or less), although the demo checks passed. Early evidence
-only. Undecided: verifier on full screen or browser page area.
+Earlier finding: all full-screen changes in the M2 demo were below the old
+1% threshold although the checks passed. Agreed default: verifier uses the
+browser page area (still to confirm with the supervisor against the
+proposal's "full screen capture").
 
 Old screenshots remain in runs/capture/20261125_122650_381937 (not opened
 by the previous assistant).
@@ -154,24 +155,22 @@ by the previous assistant).
 
 PART 5: NEXT
 ------------
-1. My review of M3 and the other open items (see PROGRESS.txt).
-2. Commit or push only when I ask.
-3. Finish M4: the user's label check and real-screen comparison. If the
-   comparison fails, change the capture method and tune again.
-4. Then M5: planner + OCR + text matching (no DOM). Explain the plan first;
-   check OCR support for Python 3.13.
+1. User's open checks (see PROGRESS.txt) and supervisor questions.
+2. M5: planner + OCR + simple matching + agent loop, with NO DOM for
+   choosing elements. Explain the plan first and wait. Check OCR support
+   for Python 3.13. The pixel rule often wrongly reports success, so log
+   those mistakes.
 
-Rough estimate given earlier (before M2): 5-10% of the whole project. It
-was not re-estimated. Most of the work remains.
+Rough estimate after M4: 20-25% of the whole project built. It is a
+judgement, not a measure of understanding or a grade.
 
 Guide notes: dataset sizes, models and run counts are suggestions, not
 tested. Library versions, licences and dataset terms mentioned in it were
 not checked online. Verify them before relying on them.
 
-
-Real websites: the current code works only for the local practice page.
-Plan and safety rules are in guide section 25. Use approved practice sites
-and fake accounts only; the suggested public sites have not been checked.
+Real websites: not supported yet. Plan and safety rules are in guide
+section 25. Use approved practice sites and fake accounts only; the
+suggested public sites have not been checked.
 
 
 PART 6: KEEPING NOTES

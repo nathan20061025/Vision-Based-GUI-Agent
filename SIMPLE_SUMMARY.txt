@@ -122,26 +122,26 @@ LOOK -> FIND -> CHOOSE -> ACT -> CHECK -> FIX OR CONTINUE
 
 WHERE AM I NOW?
 (Updated 2026-11-26)
-Working so far (mouse and pictures tried on the login page only):
-  - the before/after check for one click (page pictures)
+Working so far:
   - real mouse and keyboard: click, type, press keys, scroll
+    (tried on the login page only)
   - stop with Esc or a screen corner, and an action limit
   - optional full-screen pictures, deleted after the run unless kept
   - a text log that does not save typed text
-A tool called Playwright still finds the buttons and checks the results.
-No ML models are built yet.
+  - 7 practice sites, 12 tasks, switchable failures and automatic success
+    checks (no agent has done the tasks yet)
+  - the simple picture-change rule, tuned on validation examples
 
-Also built: 7 practice sites, 12 tasks, switchable failures and automatic
-success checks. These checks passed; no agent has done the tasks yet.
+A tool called Playwright still finds the buttons. No ML models are built.
 
-One early finding: on full-screen pictures, every change in the demo was
-smaller than the simple rule's temporary 1% limit, even though the demo
-worked. This needs proper testing before I draw conclusions.
+The picture-change rule is weak. On validation examples it spotted all
+the successes, but it also wrongly accepted about 6 in 10 failures,
+because many failures change the screen too. I checked a sample of the
+labels, and a real-screen comparison passed on my laptop. These are not
+final test results.
 
-Now: the picture-change rule. I tuned it on validation examples. It spots
-all the successes, but it also wrongly accepts about 6 in 10 failures,
-because many failures change the screen too. These settings still need my
-label check and a real-screen test. These are not final test results.
+Next: build a basic full agent (read the screen text, use simple rules to
+choose, act and check).
 See PROGRESS.txt.
 
 CAN IT WORK ON REAL WEBSITES?

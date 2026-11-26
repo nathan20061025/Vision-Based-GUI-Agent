@@ -6,9 +6,8 @@ Last updated: 2026-11-26
 
 WHERE I AM NOW
 --------------
-Milestone 3 build and automatic checks are complete. No ML models are
-built. Milestone 4 is built. It still needs MY label check and MY real-screen
-comparison before it can be marked done.
+Milestones 2, 3 and 4 are marked done (some of my understanding and
+review checks are still open). No ML models are built. Next: plan M5.
 To see whether everything is committed and pushed,
 run: git status -sb  ("ahead" means not pushed yet).
 
@@ -23,13 +22,9 @@ MILESTONES
         logging (see below; my understanding check is still open)
 [x] M3  More practice sites, task files, automatic success checks
         (automatic checks passed; my review is still open)
-[~] M4  Pixel-difference verifier (first rule; threshold not tuned)
-        Step 1 vary failure designs: [x]
-        Step 2 define success per action: [x]
-        Step 3 collect examples: [~] collected; MY label check open
-        Step 4 tune on validation: [x]
-        Step 5 save settings: [~] saved as PROVISIONAL
-        Real-screen comparison: [ ] (I run it)
+[x] M4  Pixel-difference verifier (a weak baseline; see results below)
+        Steps 1-5: [x]
+        My label sample check: [x]   My real-screen comparison: [x]
 [ ] M5  Basic full agent: planner + OCR + text matching
 [ ] M6  Screen parser data and training
 [ ] M7  Grounding model
@@ -150,7 +145,7 @@ LIMITATIONS (to fix or report):
 
 MY REVIEW:
 [ ] Open each site and try each fault
-[ ] Check the 10 tasks and success rules
+[ ] Check the tasks and success rules (now 12)
 [ ] Agree the train/validation/test split
 [ ] Design at least one test site myself (or from an independent source)
 
@@ -223,11 +218,17 @@ More limitations:
 - Only 3 wrong_option-covering examples in total.
 - Actions are done by Playwright, not by agent/executor.py.
 
-MY CHECKS NEEDED:
-[ ] Check the 24 labels (runs/label_review/); note any disagreement
-[ ] Run: python -m data_tools.compare_capture
+MY CHECKS (both done 2026-11-26):
+[x] Check the 24 labels (runs/label_review/): I reported that all
+    labels look right. (Password dots cannot show the exact text.)
+[x] Run: python -m data_tools.compare_capture  -> PASSED, see below
     Pass rule fixed beforehand: same answer on at least 95% of pairs AND
     median difference in changed share at most 0.2 percentage points.
+    RESULT (my run): 29 pairs, same answer on 29/29, median difference
+    0.0, largest about 0.0025 percentage points. With either method the
+    rule was right on 14/29 (all 7 successes; it wrongly accepted 15 of
+    22 failures). One setup only (this laptop, validation pages).
+    Saved: results/pixel_rule_v1/capture_comparison.json
 
 
 OPEN ITEMS

@@ -52,8 +52,8 @@ in `tasks/` and every failure switch. It tests the sites, not an agent.
 ```
 
 - Data goes to `data/` (not in Git). The test split is never collected.
-- Chosen settings: `configs/pixel_rule.json` (**provisional** until the labels
-  are checked and the real-screen comparison is run). Results are in
+- Chosen settings: `configs/pixel_rule.json` (label sample checked and
+  real-screen comparison passed for this data version, one setup). Results are in
   `results/pixel_rule_v1/`. They are validation results, not test results.
 - `compare_capture` captures only the practice browser's page area. Keep it in
   front and keep your mouse outside it. `Esc` stops it.
