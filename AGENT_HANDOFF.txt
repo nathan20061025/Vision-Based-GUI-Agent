@@ -144,8 +144,8 @@ been trained in this project (the OCR is pretrained).
 The agent chooses targets from pictures only. Playwright opens pages,
 locates the page area in real mode, and scores results; DOM is used only
 for labels and scoring. Real runs used 1366x768, 100% scaling, one
-monitor; the real AGENT ran two validation tasks on normal pages. The M2
-real mouse demo was not rerun after the later login page change.
+monitor; the real AGENT ran two validation tasks on normal pages. The user
+reran the M2 real mouse demo after the later login page change: 5/5 passed.
 
 M4 results: data version 2688cf59425a8971 (433 examples; re-create with
 python -m data_tools.collect). Chosen on VALIDATION: tolerance 15,

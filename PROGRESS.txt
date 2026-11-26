@@ -113,6 +113,9 @@ elements and checks the results.
     Stopped run log: type "stopped", run "stopped" (Esc).
     "testuser" and "test123" were not found in either log.
 
+RERUN 2026-11-26, after the later login page change: MY real
+milestone2_actions.py run (without --capture) passed 5/5 checks.
+
 Tests: 49 passed (2026-11-25). Executor, capture and logger tests use fake
 mouse/keyboard or fake pictures.
 
@@ -132,7 +135,7 @@ Results: 60 unit tests passed. verify_tasks.py (hidden browser) passed
 broken and distractor stay failed; slow succeeds only after waiting;
 popup blocks, and the task works after closing it. Milestone 1 demo gave
 the same percentages after the login page change. The M2 real mouse demo
-was NOT rerun after that change.
+was not rerun at that time (rerun later and passed: see Milestone 2).
 This checks the SITES, not an agent.
 MY run of verify_tasks.py: 10 of 10 tasks passed.
 
