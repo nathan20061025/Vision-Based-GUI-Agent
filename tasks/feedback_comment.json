@@ -24,7 +24,7 @@
   ],
   "answer_key": [
     {
-      "action": "click",
+      "action": "check",
       "selector": "#rating-poor"
     },
     {

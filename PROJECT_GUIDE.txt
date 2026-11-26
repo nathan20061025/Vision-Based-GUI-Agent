@@ -165,7 +165,9 @@ is currently agent/pixel_rule.py; move it into agent/verifier/ when you add
 the other verifiers. Also built, but not listed below: agent/coordinates.py.
 agent/capture.py, executor.py, safety.py and logger.py exist too. See
 PROGRESS.txt for what is built and tested. Milestone 3 added evaluation/
-(examiner only), tasks/, practice_sites/ and verify_tasks.py. As built: capture.py saves
+(examiner only), tasks/, practice_sites/ and verify_tasks.py. Milestone 4
+added data_tools/, configs/ and results/ (the pixel rule is in
+agent/pixel_rule.py). As built: capture.py saves
 before/after pictures and deletes them after a run unless --keep is used,
 and logger.py logs actions without typed text (section 14 suggests saving
 more for error analysis: turn picture keeping on only when needed).

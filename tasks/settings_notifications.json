@@ -19,7 +19,7 @@
   ],
   "answer_key": [
     {
-      "action": "click",
+      "action": "check",
       "selector": "#notify"
     },
     {

@@ -1,0 +1,8 @@
+{
+  "status": "provisional: label check and real-screen comparison needed",
+  "pixel_tolerance": 15,
+  "change_threshold": 0.0001,
+  "chosen_on": "validation split only",
+  "data_version": "2688cf59425a8971",
+  "rule": "highest balanced accuracy; ties: fewer false successes, smaller tolerance, larger threshold"
+}

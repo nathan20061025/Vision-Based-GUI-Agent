@@ -9,7 +9,7 @@ SPLITS = {"train", "validation", "test"}
 FAULTS = {"broken", "slow", "popup", "distractor"}
 VARIANTS = (1, 2)  # pop-up and banner designs per split
 CHECKS = {"count", "text", "value", "checked"}
-ACTIONS = {"fill", "click", "select"}
+ACTIONS = {"fill", "click", "check", "select"}
 REQUIRED = {"id", "site", "split", "difficulty", "instruction",
             "step_limit", "success", "answer_key"}
 

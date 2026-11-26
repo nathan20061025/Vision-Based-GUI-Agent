@@ -138,8 +138,10 @@ One early finding: on full-screen pictures, every change in the demo was
 smaller than the simple rule's temporary 1% limit, even though the demo
 worked. This needs proper testing before I draw conclusions.
 
-Now: improving the picture-change rule. First step done: training,
-validation and testing have different pop-ups and banners.
+Now: the picture-change rule. I tuned it on validation examples. It spots
+all the successes, but it also wrongly accepts about 6 in 10 failures,
+because many failures change the screen too. These settings still need my
+label check and a real-screen test. These are not final test results.
 See PROGRESS.txt.
 
 CAN IT WORK ON REAL WEBSITES?

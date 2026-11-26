@@ -24,7 +24,7 @@
       "value": "test@example.com"
     },
     {
-      "action": "click",
+      "action": "check",
       "selector": "#terms"
     },
     {

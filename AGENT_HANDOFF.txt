@@ -102,7 +102,7 @@ in requirements.txt. Check Python 3.13 support before adding ML packages.
 .venv/, runs/, .claude/ and PDFs are ignored by Git.
 
 Commands: see README.md. Tests: .venv\Scripts\python -m pytest
-(62 passed on 2026-11-26).
+(80 passed on 2026-11-26).
 
 Files:
   practice_sites/login/index.html  login page; ?broken=1 disables login
@@ -127,11 +127,17 @@ M3 files: practice_sites/ (6 sites, sites.json, shared/faults.js), tasks/,
 evaluation/ (examiner only; agent/ must not import it), verify_tasks.py,
 tests/test_tasks.py. 60 tests passed; verify_tasks.py passed 10/10.
 M3 has been committed (check git log and git status -sb).
-M4 STARTED. Step 1 done: each split has its own popup/banner designs
-(2 variants each); added validation site 'feedback'. Now 7 sites, 12
-tasks; 62 tests and verify_tasks.py passed. Check git for commit state.
-M4 plan and rules are in PROGRESS.txt. Sites are AI-made, and the test
-split is only 1 site.
+M4 BUILT, NOT DONE. Step rules (evaluation/step_rules.py), collector
+(data_tools/), tuning, label review and capture comparison exist. 80 tests
+passed. Data version 2688cf59425a8971 (433 examples; data/ is not in Git,
+re-create with python -m data_tools.collect). Validation: chosen settings
+(tolerance 15, threshold 0.0001) give 69.2% balanced accuracy and 61.5%
+false successes: a weak baseline. Settings are PROVISIONAL until the USER
+(1) checks the label sheets and (2) runs data_tools.compare_capture on the
+real screen. Do not run (2) for them without asking. No test-split data may
+be collected or measured until M11. Details in PROGRESS.txt. Before M8,
+add pop-ups that appear between the before and after pictures.
+Sites are AI-made; the test split is only 1 site.
 
 Agreed default: verifier uses the browser page area (to be checked with
 the supervisor).
@@ -150,10 +156,10 @@ PART 5: NEXT
 ------------
 1. My review of M3 and the other open items (see PROGRESS.txt).
 2. Commit or push only when I ask.
-3. M4 step 2: define success per action, with tests. Then collect
-   examples, tune on VALIDATION only, save settings. Then M5: planner +
-   OCR + text matching (no DOM). Explain each plan first; check OCR
-   support for Python 3.13.
+3. Finish M4: the user's label check and real-screen comparison. If the
+   comparison fails, change the capture method and tune again.
+4. Then M5: planner + OCR + text matching (no DOM). Explain the plan first;
+   check OCR support for Python 3.13.
 
 Rough estimate given earlier (before M2): 5-10% of the whole project. It
 was not re-estimated. Most of the work remains.

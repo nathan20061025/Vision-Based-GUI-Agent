@@ -7,7 +7,8 @@ Last updated: 2026-11-26
 WHERE I AM NOW
 --------------
 Milestone 3 build and automatic checks are complete. No ML models are
-built. Milestone 4 has started: step 1 (vary failure designs) is built.
+built. Milestone 4 is built. It still needs MY label check and MY real-screen
+comparison before it can be marked done.
 To see whether everything is committed and pushed,
 run: git status -sb  ("ahead" means not pushed yet).
 
@@ -23,10 +24,12 @@ MILESTONES
 [x] M3  More practice sites, task files, automatic success checks
         (automatic checks passed; my review is still open)
 [~] M4  Pixel-difference verifier (first rule; threshold not tuned)
-        Step 1 vary failure designs: [x] built, automatic checks passed
-        Step 2 define success per action: [ ]
-        Step 3 collect examples: [ ]   Step 4 tune: [ ]
-        Step 5 save chosen settings: [ ]
+        Step 1 vary failure designs: [x]
+        Step 2 define success per action: [x]
+        Step 3 collect examples: [~] collected; MY label check open
+        Step 4 tune on validation: [x]
+        Step 5 save settings: [~] saved as PROVISIONAL
+        Real-screen comparison: [ ] (I run it)
 [ ] M5  Basic full agent: planner + OCR + text matching
 [ ] M6  Screen parser data and training
 [ ] M7  Grounding model
@@ -177,6 +180,56 @@ must not read IDs). Different designs reduce shortcut learning but do not
 prove there is none.
 
 
+Steps 2-5 results (2026-11-26):
+- Success is judged per action (evaluation/step_rules.py). Checkbox/radio
+  steps are now "check" in the task files.
+- Data: hidden-browser page pictures, 3 window/zoom/colour/text variations.
+  Data version 2688cf59425a8971: 433 examples (train 241, validation 192;
+  79 success, 354 failure). 522 labels checked against the expected label:
+  no differences, no errors. 89 identical examples removed (each kept
+  example lists the cases it covers). No test-split data.
+- Problems found and fixed before these results: (1) removed duplicates had
+  skipped the expected-label check and hid cases; (2) the collector pressed
+  Ctrl+A before typing, so a missed click highlighted the whole page, which
+  my agent never does (shortcut risk). Earlier results were discarded.
+- AI looked at: all 24 sampled pictures from the earlier flawed run
+  (labels looked right) and 8 of the new sample (looked right). This does
+  not replace MY check.
+
+Tuning (VALIDATION, used to choose settings; NOT test results):
+  192 examples: 36 success, 156 failure.
+                     tolerance threshold balanced  false     successes
+                                         accuracy  success   found
+  chosen             15        0.01%     69.2%     61.5%     36/36
+  old placeholder    25        1%        38.5%     23.1%     0/36
+  (Always answering the same thing gives 50% balanced accuracy.)
+  Chosen rule: calls nearly any visible change a success. Of the failures,
+  it wrongly accepted 96 of 156. It got 0 right for distractor (0/15 each
+  design), wrong_text (0/9), wrong_target (0/6), wrong_option (0/3);
+  broken 3/15, slow_early 3/15, miss 12/36. Cases overlap because
+  identical examples are merged.
+  Tune on 2 validation sites, check the 3rd: balanced accuracy 57.3%
+  (feedback), 71.4% (settings), 66.7% (todo).
+  Running the tuning twice gave an identical report.
+  Dry run of the comparison code (hidden browser): works. Says NOTHING
+  about real screens.
+
+More limitations:
+- Small, AI-made data: 3 validation sites; variations are not independent.
+- Success/failure is unbalanced (about 1:4 in validation 36:156).
+- In popup cases the pop-up is already visible in the BEFORE picture, so a
+  trained verifier could learn "pop-up before = failure". Before M8 add
+  cases where it appears between before and after.
+- Only 3 wrong_option-covering examples in total.
+- Actions are done by Playwright, not by agent/executor.py.
+
+MY CHECKS NEEDED:
+[ ] Check the 24 labels (runs/label_review/); note any disagreement
+[ ] Run: python -m data_tools.compare_capture
+    Pass rule fixed beforehand: same answer on at least 95% of pairs AND
+    median difference in changed share at most 0.2 percentage points.
+
+
 OPEN ITEMS
 ----------
 [ ] Explain in my own words: pixel_rule.py, milestone1.py, executor.py,
@@ -231,6 +284,9 @@ faults.js, login page change, tasks, evaluation/, verify_tasks.py, tests);
 ran the checks; updated the notes.
 2026-11-26, Claude Code (AI): M4 plan and step 1 (new faults.js designs,
 feedback site and tasks, extra checks and tests).
+2026-11-26, Claude Code (AI): wrote M4 steps 2-5 (step rules, collector,
+tuning, label review, capture comparison, tests); ran collection and
+tuning; found and fixed two data problems; spot-checked labels.
 
 
 WEEKLY NOTES (write these yourself)

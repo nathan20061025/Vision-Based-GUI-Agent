@@ -42,6 +42,23 @@ in `tasks/` and every failure switch. It tests the sites, not an agent.
   own designs.
 - `evaluation/` reads the page code to score results. `agent/` must not use it.
 
+## Pixel-rule data and tuning (Milestone 4)
+
+```powershell
+.venv\Scripts\python -m data_tools.collect          # 10+ minutes, hidden browser
+.venv\Scripts\python -m data_tools.tune_pixel_rule  # validation split only
+.venv\Scripts\python -m data_tools.label_review     # sheets in runs/label_review/
+.venv\Scripts\python -m data_tools.compare_capture  # real screen, page area only
+```
+
+- Data goes to `data/` (not in Git). The test split is never collected.
+- Chosen settings: `configs/pixel_rule.json` (**provisional** until the labels
+  are checked and the real-screen comparison is run). Results are in
+  `results/pixel_rule_v1/`. They are validation results, not test results.
+- `compare_capture` captures only the practice browser's page area. Keep it in
+  front and keep your mouse outside it. `Esc` stops it.
+- `milestone1.py` still uses the old placeholder settings.
+
 ## Notes
 
 - `--show` opens a visible browser (it may close quickly). `--broken` makes the

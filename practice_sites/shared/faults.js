@@ -104,26 +104,29 @@
     action();
   };
 
+  // Also used by the data collector to show a pop-up part-way through a task.
+  window.showFaultPopup = function () {
+    const cover = document.createElement("div");
+    cover.id = "fault-popup";
+    cover.style.cssText =
+      "position:fixed;inset:0;z-index:10;background:" + design.cover;
+    const box = document.createElement("div");
+    box.style.cssText = design.box;
+    const text = document.createElement("p");
+    text.textContent = design.popupText;
+    const close = document.createElement("button");
+    close.id = "fault-popup-close";
+    close.type = "button";
+    close.textContent = design.close;
+    // Fixed style, so the page's own button style does not apply.
+    close.style.cssText = "all:revert;padding:8px 20px;cursor:pointer";
+    close.addEventListener("click", () => cover.remove());
+    box.append(text, close);
+    cover.appendChild(box);
+    document.body.appendChild(cover);
+  };
+
   if (fault === "popup") {
-    window.addEventListener("DOMContentLoaded", () => {
-      const cover = document.createElement("div");
-      cover.id = "fault-popup";
-      cover.style.cssText =
-        "position:fixed;inset:0;z-index:10;background:" + design.cover;
-      const box = document.createElement("div");
-      box.style.cssText = design.box;
-      const text = document.createElement("p");
-      text.textContent = design.popupText;
-      const close = document.createElement("button");
-      close.id = "fault-popup-close";
-      close.type = "button";
-      close.textContent = design.close;
-      // Fixed style, so the page's own button style does not apply.
-      close.style.cssText = "all:revert;padding:8px 20px;cursor:pointer";
-      close.addEventListener("click", () => cover.remove());
-      box.append(text, close);
-      cover.appendChild(box);
-      document.body.appendChild(cover);
-    });
+    window.addEventListener("DOMContentLoaded", window.showFaultPopup);
   }
 })();

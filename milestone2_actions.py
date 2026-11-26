@@ -42,7 +42,7 @@ def report(name: str, passed: bool, logger: RunLogger) -> None:
 
 def run(page, executor: Executor, capture: ActionCapture | None) -> None:
     def act(label, action):
-        if capture is None:
+        if capture is None: 
             action()
             return
         before, after = capture.around(label, action)

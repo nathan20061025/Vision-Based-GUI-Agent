@@ -20,11 +20,25 @@
   "answer_key": [
     {
       "action": "click",
-      "selector": "#add-pens"
+      "selector": "#add-pens",
+      "expect": [
+        {
+          "selector": "body[data-cart=\"pens\"]",
+          "check": "count",
+          "expected": 1
+        }
+      ]
     },
     {
       "action": "click",
-      "selector": "#order-button"
+      "selector": "#order-button",
+      "expect": [
+        {
+          "selector": "#confirmation",
+          "check": "text",
+          "expected": "Demo order placed"
+        }
+      ]
     }
   ]
 }
