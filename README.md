@@ -26,6 +26,22 @@ py -3.13 -m venv .venv
 .venv\Scripts\python milestone2_actions.py --capture
 ```
 
+## Practice sites and tasks (Milestone 3)
+
+```powershell
+.venv\Scripts\python verify_tasks.py
+```
+
+Uses a hidden browser (no mouse control or screen capture) to check every task
+in `tasks/` and every failure switch. It tests the sites, not an agent.
+
+- Sites are listed in `practice_sites/sites.json`, each in one split: train,
+  validation or test.
+- Add `?fault=broken`, `slow`, `popup` or `distractor` to a page address.
+- `evaluation/` reads the page code to score results. `agent/` must not use it.
+
+## Notes
+
 - `--show` opens a visible browser (it may close quickly). `--broken` makes the
   login button do nothing.
 - **`milestone2_positions.py --click` moves your real mouse.** Test the stop

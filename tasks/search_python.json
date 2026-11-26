@@ -1,0 +1,31 @@
+{
+  "id": "search_python",
+  "site": "search",
+  "split": "train",
+  "difficulty": "easy",
+  "instruction": "Search for \"python\".",
+  "step_limit": 6,
+  "success": [
+    {
+      "selector": "#query",
+      "check": "value",
+      "expected": "python"
+    },
+    {
+      "selector": "#summary",
+      "check": "text",
+      "expected": "2 result(s)"
+    }
+  ],
+  "answer_key": [
+    {
+      "action": "fill",
+      "selector": "#query",
+      "value": "python"
+    },
+    {
+      "action": "click",
+      "selector": "#search-button"
+    }
+  ]
+}

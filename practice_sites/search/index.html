@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Practice Search</title>
+  <style>
+    body { font-family: Georgia, serif; margin: 0; background: #fffdf5; }
+    header { background: #14532d; color: white; padding: 16px 40px; }
+    section { padding: 24px 40px; }
+    input { width: 360px; padding: 10px; font-size: 16px; }
+    button { padding: 10px 22px; font-size: 16px; background: #facc15; border: 0; }
+    li { padding: 6px 0; }
+  </style>
+  <script src="../shared/faults.js"></script>
+</head>
+<body>
+  <header><h1>Book Finder</h1></header>
+  <section>
+    <form id="search-form">
+      <input id="query" placeholder="Search books" autocomplete="off">
+      <button id="search-button" type="submit">Search</button>
+    </form>
+    <p id="summary"></p>
+    <ul id="results"></ul>
+  </section>
+  <script>
+    const books = ["Python Basics", "Python for Data", "Learning Git",
+                   "Computer Vision Guide", "Cooking at Home"];
+    document.getElementById("search-form").addEventListener("submit", (event) => {
+      event.preventDefault();
+      runMainAction(() => {
+        const text = document.getElementById("query").value.trim().toLowerCase();
+        const found = books.filter(b => text && b.toLowerCase().includes(text));
+        document.getElementById("summary").textContent = found.length + " result(s)";
+        document.getElementById("results").innerHTML =
+          found.map(b => "<li>" + b + "</li>").join("");
+      });
+    });
+  </script>
+</body>
+</html>

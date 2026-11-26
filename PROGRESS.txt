@@ -1,14 +1,14 @@
 PROJECT PROGRESS
 ================
 [x] = done    [~] = partly done    [ ] = not done
-Last updated: 2026-11-25
+Last updated: 2026-11-26
 
 
 WHERE I AM NOW
 --------------
-Milestone 2 build and real checks are complete. No ML models are built.
-Next: finish the open items below, then plan Milestone 3.
-The code and notes are committed locally. To see whether they are pushed,
+Milestone 3 build and automatic checks are complete. No ML models are
+built. Next: my review of M3, the open items, then Milestone 4.
+To see whether everything is committed and pushed,
 run: git status -sb  ("ahead" means not pushed yet).
 
 
@@ -20,7 +20,8 @@ MILESTONES
         my own review and explanation are not confirmed.
 [x] M2  Mouse/keyboard control, click positions, stop controls, capture,
         logging (see below; my understanding check is still open)
-[ ] M3  More practice sites, task files, automatic success checks
+[x] M3  More practice sites, task files, automatic success checks
+        (automatic checks passed; my review is still open)
 [~] M4  Pixel-difference verifier (first version only; needs more data
         and a threshold chosen on validation data)
 [ ] M5  Basic full agent: planner + OCR + text matching
@@ -112,6 +113,43 @@ Tests: 49 passed (2026-11-25). Executor, capture and logger tests use fake
 mouse/keyboard or fake pictures.
 
 
+MILESTONE 3 RESULTS (2026-11-26)
+--------------------------------
+6 sites, split by whole site:
+  train:      login, search, signup   (5 tasks)
+  validation: settings, todo          (3 tasks)
+  test:       shop                    (2 tasks)
+Failure switches: broken, slow, popup, distractor
+(practice_sites/shared/faults.js).
+New: evaluation/ (task loader, DOM success checker), tasks/ (10 files),
+verify_tasks.py, tests/test_tasks.py.
+Results: 60 unit tests passed. verify_tasks.py (hidden browser) passed
+10/10 tasks in 4 runs: not already successful at start; answer key works;
+broken and distractor stay failed; slow succeeds only after waiting;
+popup blocks, and the task works after closing it. Milestone 1 demo gave
+the same percentages after the login page change. The M2 real mouse demo
+was NOT rerun after that change.
+This checks the SITES, not an agent.
+MY run of verify_tasks.py: 10 of 10 tasks passed.
+
+LIMITATIONS (to fix or report):
+  - Too small: test split is 1 site with 2 tasks; 10 tasks in total
+    (guide suggests 30-50).
+  - All sites were made by the same AI with simple layouts. They are not
+    independent unseen designs.
+  - LEAKAGE RISK: every split uses the SAME popup and distractor banner,
+    so a verifier could learn "this banner means failure". Vary them per
+    split before collecting data.
+  - At the checked size, scrolling is not part of any task.
+  - Do not tune anything on the test site.
+
+MY REVIEW:
+[ ] Open each site and try each fault
+[ ] Check the 10 tasks and success rules
+[ ] Agree the train/validation/test split
+[ ] Design at least one test site myself (or from an independent source)
+
+
 OPEN ITEMS
 ----------
 [ ] Explain in my own words: pixel_rule.py, milestone1.py, executor.py,
@@ -125,7 +163,8 @@ OPEN ITEMS
     capture" requirement with my supervisor)
 [ ] Delete or keep the old screenshot folder
 [x] Commit the code and notes
-[ ] Push (this makes the notes public too)
+[x] Push the Milestone 1-2 work and notes
+[x] Commit and push Milestone 3 (check: git status -sb)
 [ ] Write down my laptop's CPU, RAM and GPU
 
 
@@ -160,6 +199,9 @@ All on 2026-11-25, Claude Code (AI):
   added the fix; checked my run logs.
 - Tidied all the notes.
 - Explained testing on real websites and added it to the notes.
+2026-11-26, Claude Code (AI): wrote all Milestone 3 files (5 new sites,
+faults.js, login page change, tasks, evaluation/, verify_tasks.py, tests);
+ran the checks; updated the notes.
 
 
 WEEKLY NOTES (write these yourself)

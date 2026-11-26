@@ -1,6 +1,6 @@
 HANDOFF FOR A NEW AI AGENT
 ==========================
-Last updated 2026-11-25. It may be out of date: check the files and Git.
+Last updated 2026-11-26. It may be out of date: check the files and Git.
 
 
 PART 1: PROMPT TO COPY INTO THE NEW AGENT
@@ -102,7 +102,7 @@ in requirements.txt. Check Python 3.13 support before adding ML packages.
 .venv/, runs/, .claude/ and PDFs are ignored by Git.
 
 Commands: see README.md. Tests: .venv\Scripts\python -m pytest
-(49 passed on 2026-11-25).
+(60 passed on 2026-11-26).
 
 Files:
   practice_sites/login/index.html  login page; ?broken=1 disables login
@@ -119,8 +119,19 @@ Files:
   agent/logger.py          JSON Lines run log (no typed text)
   tests/                   unit tests (fakes for real devices)
 
-Status: M2 build and real checks are complete (detailed results are in
-PROGRESS.txt). M1 and M4 are partial. M0 is open. No ML models exist.
+Status: M2 build and real checks are complete; M3 build and automatic
+checks are complete, user review open (details in PROGRESS.txt). M1 and M4
+are partial. M0 is open. No ML models exist.
+
+M3 files: practice_sites/ (6 sites, sites.json, shared/faults.js), tasks/,
+evaluation/ (examiner only; agent/ must not import it), verify_tasks.py,
+tests/test_tasks.py. 60 tests passed; verify_tasks.py passed 10/10.
+M3 has been committed (check git log and git status -sb).
+Known risk: same popup/distractor in all splits; vary before collecting
+verifier data. Sites are AI-made, and the test split is only 1 site.
+
+Agreed default: verifier uses the browser page area (to be checked with
+the supervisor).
 Playwright still finds elements and checks results. Real tests used only
 1366x768, 100% scaling, one monitor and one page.
 
@@ -134,11 +145,12 @@ by the previous assistant).
 
 PART 5: NEXT
 ------------
-1. My understanding checks and other open items (see PROGRESS.txt).
+1. My review of M3 and the other open items (see PROGRESS.txt).
 2. Commit or push only when I ask.
-3. M3: explain the plan first. Practice sites, task files, automatic
-   success checks. Decide which sites/designs are reserved for validation
-   and testing BEFORE creating training data.
+3. M4: first vary popup/distractor per split. Then collect success and
+   failure examples and choose the pixel threshold on VALIDATION only.
+   Then M5: planner + OCR + text matching (no DOM). Explain each plan
+   first; check OCR support for Python 3.13.
 
 Rough estimate given earlier (before M2): 5-10% of the whole project. It
 was not re-estimated. Most of the work remains.

@@ -9,6 +9,7 @@
     input, button { display: block; width: 100%; box-sizing: border-box;
                     margin-top: 12px; padding: 10px; }
   </style>
+  <script src="../shared/faults.js"></script>
 </head>
 <body>
   <!-- Practice page only. Fake accounts only. -->
@@ -23,21 +24,19 @@
   </main>
 
   <script>
-    // Add ?broken=1 to the address to make the button do nothing.
-    const broken = new URLSearchParams(location.search).get("broken") === "1";
-
+    // Failures such as ?broken=1 are handled in ../shared/faults.js.
     document.getElementById("login-form").addEventListener("submit", (event) => {
       event.preventDefault();
-      if (broken) return;
-
-      const user = document.getElementById("username").value;
-      const password = document.getElementById("password").value;
-      if (user === "testuser" && password === "test123") {
-        document.getElementById("login-view").innerHTML =
-          '<h1 id="welcome">Welcome, testuser</h1><p>You are logged in.</p>';
-      } else {
-        document.getElementById("message").textContent = "Wrong username or password";
-      }
+      runMainAction(() => {
+        const user = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+        if (user === "testuser" && password === "test123") {
+          document.getElementById("login-view").innerHTML =
+            '<h1 id="welcome">Welcome, testuser</h1><p>You are logged in.</p>';
+        } else {
+          document.getElementById("message").textContent = "Wrong username or password";
+        }
+      });
     });
   </script>
 </body>

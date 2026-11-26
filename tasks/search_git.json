@@ -1,0 +1,31 @@
+{
+  "id": "search_git",
+  "site": "search",
+  "split": "train",
+  "difficulty": "easy",
+  "instruction": "Search for \"git\".",
+  "step_limit": 6,
+  "success": [
+    {
+      "selector": "#query",
+      "check": "value",
+      "expected": "git"
+    },
+    {
+      "selector": "#summary",
+      "check": "text",
+      "expected": "1 result(s)"
+    }
+  ],
+  "answer_key": [
+    {
+      "action": "fill",
+      "selector": "#query",
+      "value": "git"
+    },
+    {
+      "action": "click",
+      "selector": "#search-button"
+    }
+  ]
+}

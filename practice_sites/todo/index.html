@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Practice To-Do</title>
+  <style>
+    body { font-family: "Trebuchet MS", sans-serif; background: #fdf2f8; }
+    main { width: 520px; margin: 50px auto; background: white; border-radius: 12px; padding: 24px; }
+    form { display: flex; gap: 8px; }
+    #new-task { flex: 1; padding: 10px; }
+    #add-button { padding: 10px 20px; background: #be185d; color: white; border: 0; border-radius: 6px; }
+    li { list-style: none; padding: 10px 0; border-bottom: 1px dashed #ccc; }
+  </style>
+  <script src="../shared/faults.js"></script>
+</head>
+<body>
+  <main>
+    <h1>My tasks</h1>
+    <form id="todo-form">
+      <input id="new-task" placeholder="What needs doing?" autocomplete="off">
+      <button id="add-button" type="submit">Add</button>
+    </form>
+    <ul id="list"><li><label><input type="checkbox"> Water the plants</label></li></ul>
+  </main>
+  <script>
+    document.getElementById("todo-form").addEventListener("submit", (event) => {
+      event.preventDefault();
+      runMainAction(() => {
+        const box = document.getElementById("new-task");
+        if (!box.value.trim()) return;
+        const item = document.createElement("li");
+        item.className = "added";
+        const label = document.createElement("label");
+        const tick = document.createElement("input");
+        tick.type = "checkbox";
+        label.append(tick, " " + box.value.trim());
+        item.appendChild(label);
+        document.getElementById("list").appendChild(item);
+        box.value = "";
+      });
+    });
+  </script>
+</body>
+</html>

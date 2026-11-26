@@ -1,0 +1,41 @@
+{
+  "id": "settings_dark_name",
+  "site": "settings",
+  "split": "validation",
+  "difficulty": "medium",
+  "instruction": "Choose the Dark theme, set the display name to \"Sam Tester\" and save the changes.",
+  "step_limit": 10,
+  "success": [
+    {
+      "selector": "#theme",
+      "check": "value",
+      "expected": "Dark"
+    },
+    {
+      "selector": "#nickname",
+      "check": "value",
+      "expected": "Sam Tester"
+    },
+    {
+      "selector": "#status",
+      "check": "text",
+      "expected": "Settings saved"
+    }
+  ],
+  "answer_key": [
+    {
+      "action": "select",
+      "selector": "#theme",
+      "value": "Dark"
+    },
+    {
+      "action": "fill",
+      "selector": "#nickname",
+      "value": "Sam Tester"
+    },
+    {
+      "action": "click",
+      "selector": "#save-button"
+    }
+  ]
+}

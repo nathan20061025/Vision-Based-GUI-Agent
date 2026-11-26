@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Practice Shop</title>
+  <style>
+    body { font-family: "Segoe UI", sans-serif; margin: 0; background: #f8fafc; }
+    nav { display: flex; justify-content: space-between; padding: 14px 32px;
+          background: #ea580c; color: white; }
+    .items { display: flex; gap: 24px; padding: 32px; }
+    .card { background: white; border: 1px solid #cbd5e1; padding: 20px;
+            width: 200px; text-align: center; }
+    button { padding: 9px 18px; border: 2px solid #ea580c; background: white; cursor: pointer; }
+    #order { padding: 0 32px; }
+  </style>
+  <script src="../shared/faults.js"></script>
+</head>
+<body>
+  <nav><strong>Demo Shop (no real payments)</strong>
+    <span>Cart: <span id="cart-count">0</span></span></nav>
+  <div class="items">
+    <div class="card"><h2>Notebook</h2>
+      <button id="add-notebook" type="button">Add notebook</button></div>
+    <div class="card"><h2>Pen set</h2>
+      <button id="add-pens" type="button">Add pen set</button></div>
+  </div>
+  <div id="order">
+    <button id="order-button" type="button">Place demo order</button>
+    <p id="confirmation"></p>
+  </div>
+  <script>
+    const cart = [];
+    function add(name) {
+      cart.push(name);
+      document.getElementById("cart-count").textContent = cart.length;
+      document.body.dataset.cart = cart.join(",");
+    }
+    document.getElementById("add-notebook").addEventListener("click",
+      () => runMainAction(() => add("notebook")));
+    document.getElementById("add-pens").addEventListener("click",
+      () => runMainAction(() => add("pens")));
+    document.getElementById("order-button").addEventListener("click",
+      () => runMainAction(() => {
+        document.getElementById("confirmation").textContent =
+          cart.length ? "Demo order placed" : "Your cart is empty";
+      }));
+  </script>
+</body>
+</html>

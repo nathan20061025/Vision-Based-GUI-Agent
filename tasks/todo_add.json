@@ -1,0 +1,26 @@
+{
+  "id": "todo_add",
+  "site": "todo",
+  "split": "validation",
+  "difficulty": "easy",
+  "instruction": "Add a task called \"Buy milk\".",
+  "step_limit": 6,
+  "success": [
+    {
+      "selector": "li.added",
+      "check": "text",
+      "expected": "Buy milk"
+    }
+  ],
+  "answer_key": [
+    {
+      "action": "fill",
+      "selector": "#new-task",
+      "value": "Buy milk"
+    },
+    {
+      "action": "click",
+      "selector": "#add-button"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Practice Sign Up</title>
+  <style>
+    body { font-family: Verdana, sans-serif; background: #1e293b; color: #e2e8f0; }
+    main { width: 440px; margin: 40px 0 0 80px; }
+    label { display: block; margin-top: 14px; }
+    input[type=text], input[type=email] { width: 100%; padding: 9px; box-sizing: border-box; }
+    button { margin-top: 20px; padding: 11px 28px; background: #38bdf8; border: 0; border-radius: 20px; }
+  </style>
+  <script src="../shared/faults.js"></script>
+</head>
+<body>
+  <main id="signup-view">
+    <h1>Create account</h1>
+    <form id="signup-form" novalidate>
+      <label for="name">Full name</label><input id="name" type="text" autocomplete="off">
+      <label for="email">Email</label><input id="email" type="email" autocomplete="off">
+      <label><input id="terms" type="checkbox"> I accept the terms</label>
+      <button id="signup-button" type="submit">Sign up</button>
+    </form>
+    <p id="error"></p>
+  </main>
+  <script>
+    document.getElementById("signup-form").addEventListener("submit", (event) => {
+      event.preventDefault();
+      runMainAction(() => {
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const terms = document.getElementById("terms").checked;
+        if (!name || !email.includes("@") || !terms) {
+          document.getElementById("error").textContent =
+            "Enter your name and email, and accept the terms.";
+          return;
+        }
+        document.getElementById("signup-view").innerHTML =
+          '<h1 id="created">Account created</h1><p>You can now continue.</p>';
+      });
+    });
+  </script>
+</body>
+</html>

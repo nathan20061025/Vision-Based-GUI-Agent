@@ -121,8 +121,8 @@ ONE-LINE SUMMARY
 LOOK -> FIND -> CHOOSE -> ACT -> CHECK -> FIX OR CONTINUE
 
 WHERE AM I NOW?
-(Updated 2026-11-25)
-Working so far, on one practice page:
+(Updated 2026-11-26)
+Working so far (mouse and pictures tried on the login page only):
   - the before/after check for one click (page pictures)
   - real mouse and keyboard: click, type, press keys, scroll
   - stop with Esc or a screen corner, and an action limit
@@ -131,11 +131,14 @@ Working so far, on one practice page:
 A tool called Playwright still finds the buttons and checks the results.
 No ML models are built yet.
 
+Also built: 6 practice sites, 10 tasks, switchable failures and automatic
+success checks. These checks passed; no agent has done the tasks yet.
+
 One early finding: on full-screen pictures, every change in the demo was
 smaller than the simple rule's temporary 1% limit, even though the demo
 worked. This needs proper testing before I draw conclusions.
 
-Next: finish open checks, then more practice sites and tasks.
+Next: review the new sites, then improve the picture-change rule.
 See PROGRESS.txt.
 
 CAN IT WORK ON REAL WEBSITES?

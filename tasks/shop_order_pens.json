@@ -1,0 +1,30 @@
+{
+  "id": "shop_order_pens",
+  "site": "shop",
+  "split": "test",
+  "difficulty": "medium",
+  "instruction": "Add the pen set to the cart and place the demo order.",
+  "step_limit": 6,
+  "success": [
+    {
+      "selector": "body[data-cart=\"pens\"]",
+      "check": "count",
+      "expected": 1
+    },
+    {
+      "selector": "#confirmation",
+      "check": "text",
+      "expected": "Demo order placed"
+    }
+  ],
+  "answer_key": [
+    {
+      "action": "click",
+      "selector": "#add-pens"
+    },
+    {
+      "action": "click",
+      "selector": "#order-button"
+    }
+  ]
+}

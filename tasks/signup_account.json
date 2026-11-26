@@ -1,0 +1,35 @@
+{
+  "id": "signup_account",
+  "site": "signup",
+  "split": "train",
+  "difficulty": "medium",
+  "instruction": "Sign up with the name \"Test Person\" and email \"test@example.com\", and accept the terms.",
+  "step_limit": 10,
+  "success": [
+    {
+      "selector": "#created",
+      "check": "count",
+      "expected": 1
+    }
+  ],
+  "answer_key": [
+    {
+      "action": "fill",
+      "selector": "#name",
+      "value": "Test Person"
+    },
+    {
+      "action": "fill",
+      "selector": "#email",
+      "value": "test@example.com"
+    },
+    {
+      "action": "click",
+      "selector": "#terms"
+    },
+    {
+      "action": "click",
+      "selector": "#signup-button"
+    }
+  ]
+}

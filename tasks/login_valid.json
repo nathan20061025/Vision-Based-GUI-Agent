@@ -1,0 +1,31 @@
+{
+  "id": "login_valid",
+  "site": "login",
+  "split": "train",
+  "difficulty": "easy",
+  "instruction": "Log in with username \"testuser\" and password \"test123\".",
+  "step_limit": 8,
+  "success": [
+    {
+      "selector": "#welcome",
+      "check": "count",
+      "expected": 1
+    }
+  ],
+  "answer_key": [
+    {
+      "action": "fill",
+      "selector": "#username",
+      "value": "testuser"
+    },
+    {
+      "action": "fill",
+      "selector": "#password",
+      "value": "test123"
+    },
+    {
+      "action": "click",
+      "selector": "#login-button"
+    }
+  ]
+}

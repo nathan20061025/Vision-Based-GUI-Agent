@@ -1,0 +1,30 @@
+{
+  "id": "settings_notifications",
+  "site": "settings",
+  "split": "validation",
+  "difficulty": "easy",
+  "instruction": "Turn on email notifications and save the changes.",
+  "step_limit": 6,
+  "success": [
+    {
+      "selector": "#notify",
+      "check": "checked",
+      "expected": true
+    },
+    {
+      "selector": "#status",
+      "check": "text",
+      "expected": "Settings saved"
+    }
+  ],
+  "answer_key": [
+    {
+      "action": "click",
+      "selector": "#notify"
+    },
+    {
+      "action": "click",
+      "selector": "#save-button"
+    }
+  ]
+}

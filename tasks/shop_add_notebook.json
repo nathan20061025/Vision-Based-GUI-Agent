@@ -1,0 +1,26 @@
+{
+  "id": "shop_add_notebook",
+  "site": "shop",
+  "split": "test",
+  "difficulty": "easy",
+  "instruction": "Add the notebook to the cart.",
+  "step_limit": 4,
+  "success": [
+    {
+      "selector": "#cart-count",
+      "check": "text",
+      "expected": "1"
+    },
+    {
+      "selector": "body[data-cart=\"notebook\"]",
+      "check": "count",
+      "expected": 1
+    }
+  ],
+  "answer_key": [
+    {
+      "action": "click",
+      "selector": "#add-notebook"
+    }
+  ]
+}
